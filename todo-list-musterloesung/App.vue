@@ -26,3 +26,4 @@ export default {
 <style scoped>
  /* Remove styles from main.css if unhappy */
 </style>
+<!-- Github -->
