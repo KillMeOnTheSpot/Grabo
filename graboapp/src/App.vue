@@ -17,13 +17,21 @@
       <div v-else>
         <p>Loading...</p>
       </div>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
     </div>
   </header>
+ 
+      <v-card
+        title="Card title"
+        subtitle="Subtitle"
+        text="..."
+        variant="tonal"
+      ></v-card>
 
+    <v-container>
+      <v-chip closable>
+        Chip
+      </v-chip>
+    </v-container>
 
 </template>
 
