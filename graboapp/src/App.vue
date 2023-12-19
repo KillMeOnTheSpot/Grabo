@@ -1,8 +1,3 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
-
 <template>
   <header>
     <img
@@ -14,7 +9,7 @@ import HelloWorld from "./components/HelloWorld.vue";
     />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <input v-model="inputValue" placeholder="Type something...">
       <div v-if="responseData">
         <h2>Data from API:</h2>
         <p>{{ responseData }}</p>
@@ -29,13 +24,14 @@ import HelloWorld from "./components/HelloWorld.vue";
     </div>
   </header>
 
-  <RouterView />
+
 </template>
 
 <script>
 import axios from 'axios';
 
 const clientId = 'c003a37f-024f-462a-b36d-b001be4cd24a';
+let jobTitel = 'Referatsleiter';
 
 export default {
   data() {
@@ -50,15 +46,26 @@ export default {
   methods: {
     fetchData() {
       // Axios GET request
+      let apiUrl = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/app/jobs?was=" + jobTitel;
       axios
-        .get('https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/app/jobs?was=Referatsleiter&wo=Berlin&berufsfeld=Informatik&page=1&size=50&arbeitgeber=Deutsche%2520Bahn%2520AG&veroeffentlichtseit=30&zeitarbeit=true&angebotsart=1&befristung=1&arbeitszeit=vz&behinderung=true&corona=true&umkreis=25',{
+        .get(apiUrl
+        ,{
         headers: {
         'X-API-Key': clientId
     }
   })
         .then((response) => {
           // Handle successful response
-          this.responseData = response.data;
+          //this.responseData = response.data;
+          let text = "";
+
+          for(let i = 0;  i < response.data.stellenangebote.length; i++){
+            text += response.data.stellenangebote[i].titel;
+          }
+
+          this.responseData = text;
+          
+          console.log(this.responseData);
         })
         .catch((error) => {
           // Handle error
@@ -109,7 +116,6 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
   }
 
   .logo {
