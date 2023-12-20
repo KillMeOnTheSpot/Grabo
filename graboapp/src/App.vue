@@ -1,20 +1,4 @@
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <input v-model="inputValue" placeholder="Type something...">
-      <button @click="fetchData">Search</button>
-      <div v-if="responseData">
-        <h2>Data from API:</h2>
-        <div>{{ responseData }}</div>
-      </div>
-      <div v-else>
-        <p>Loading...</p>
-      </div>
-    </div>
-  </header>
-
   <v-layout class="rounded rounded-md">
     
     <v-navigation-drawer>
@@ -22,25 +6,32 @@
         <v-list-item title="Navigation drawer"></v-list-item>
       </v-list>
       <v-container fluid>
+        <!-- Displays whats selected, both can be selected at the same time: Vollzeit Teilzeit Card... -->
         <p>{{ selected }}</p>
         <v-checkbox v-model="selected" label="John" value="John"></v-checkbox>
         <v-checkbox v-model="selected" label="Jacob" value="Jacob"></v-checkbox>
       </v-container>
     </v-navigation-drawer>
 
-    <v-app-bar title="Application bar"></v-app-bar>
+    <v-app-bar title="Step Metal">
+      <input v-model="inputValue" placeholder="Beruf...">
+      <button @click="fetchData">Suchen</button>
+    </v-app-bar>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      Main Content
+      <div v-if="responseData">
+        <h2>Ergebnisse:</h2>
+      </div>
+      <div v-else>
+        <p>Loading...</p>
+      </div>
+      <v-container>
+        <v-card>
+          {{ responseData }}
+        </v-card>
+      </v-container>
+
     </v-main>
-    <v-container>
-    <v-chip closable> Chip </v-chip>
-  </v-container>
-
-
-  <v-container>
-    <v-card title="Card title" subtitle="Subtitle" text="..." variant="tonal"></v-card>
-  </v-container>
 
   </v-layout>
 
@@ -55,11 +46,14 @@ import axios from 'axios';
 //variables
 const clientId = 'c003a37f-024f-462a-b36d-b001be4cd24a';
 
+
+
 export default {
   data() {
     return {
       inputValue: '', //für das input feld zum suchen
       responseData: null, // to store the response data
+      selected: ['John'],
     };
   },
   methods: {
