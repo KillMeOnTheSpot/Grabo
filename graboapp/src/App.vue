@@ -1,22 +1,19 @@
 <template>
   <v-layout class="rounded rounded-md">
-
+    <v-app-bar title="Step Metal" class="navbar">
+      <input v-model="inputValue" placeholder="Beruf..." class="search">
+      <button @click="fetchData">Suchen</button>
+    </v-app-bar>
     <v-navigation-drawer>
       <v-list>
         <v-list-item title="Navigation drawer"></v-list-item>
       </v-list>
       <v-container fluid>
         <!-- Displays whats selected, both can be selected at the same time: Vollzeit Teilzeit Card... -->
-        <p>{{ selected }}</p>
         <v-checkbox v-model="selected" label="John" value="John"></v-checkbox>
-        <v-checkbox v-model="selected" label="Jacob" value="Jacob"></v-checkbox>
+        <v-checkbox v-model="selected" label="Jakob" value="Jakob"></v-checkbox>
       </v-container>
     </v-navigation-drawer>
-
-    <v-app-bar title="Step Metal">
-      <input v-model="inputValue" placeholder="Beruf...">
-      <button @click="fetchData">Suchen</button>
-    </v-app-bar>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
       <div v-if="responseData">
@@ -30,9 +27,7 @@
           {{ responseData }}
         </v-card>
       </v-container>
-
     </v-main>
-
   </v-layout>
 </template>
 
@@ -53,6 +48,7 @@ export default {
         return {
             inputValue: '',
             responseData: null, // to store the response data
+            selected: ['John'],
         };
     },
     methods: {
@@ -98,53 +94,49 @@ export default {
 header {
   line-height: 1.5;
   max-height: 100vh;
+  /* padding: 1rem; */
+  
+  
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+body{
+  background: var(--color-);
 }
-
 nav {
   width: 100%;
   font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+  text-align: left;
 }
 
 nav a {
   display: inline-block;
   padding: 0 1rem;
   border-left: 1px solid var(--color-border);
+  text-align: right;
 }
 
 nav a:first-of-type {
   border: 0;
 }
 
-@media (min-width: 1024px) {
+.navbar {
+  text-align: left;
+  width: 70px;
+}
+
+
+/* Warum Responsive mit min größe statt max Größe ??? */
+/* @media (min-width: 1024px) {
   header {
     display: flex;
     place-items: center;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
   nav {
     text-align: left;
-    margin-left: -1rem;
     font-size: 1rem;
-
     padding: 1rem 0;
-    margin-top: 1rem;
+    
   }
-}
+
+} */
 </style>
