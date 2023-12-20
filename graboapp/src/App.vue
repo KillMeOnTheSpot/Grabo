@@ -19,7 +19,11 @@
       <div v-if="responseData">
         <h2>Ergebnisse:</h2>
         <!--Job Informationen werden an die jobInfoCard Komponente übergeben-->
-        <JobInfoCard v-for="(job, index) in responseData" :key="index" :jobInfo="{ titel: job.titel, beruf: job.beruf }"></JobInfoCard>
+        <JobInfoCard v-for="(job, index) in responseData" :key="index" :jobInfo="{
+          titel: job.titel,
+          beruf: job.beruf,
+          id: job.id
+        }"></JobInfoCard>
       </div>
       <div v-else>
         <p>Loading...</p>
@@ -63,9 +67,9 @@ export default {
 
           //mapt die Daten, sodass später nur der Job Titel und Beruf übergeben wird
           const filteredData = response.data.stellenangebote
-            .map(job => ({ titel: job.titel, beruf: job.beruf }));
+            .map(job => ({ titel: job.titel, beruf: job.beruf, id: hashId }));
           this.responseData = filteredData;
-          
+
           //console log hier später löschen, manchmal praktisch um die json anzuschauen
           console.log(response.data);
         })
@@ -74,6 +78,22 @@ export default {
           console.error("Error fetching data:", error);
         });
     },
+    fetchJobDetails(hashId) {
+      const apiUrlDetails = `https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v2/jobdetails/${hashId}`;
+      axios
+        .get(apiUrlDetails, {
+          headers: {
+            'X-API-Key': clientId //API Key 
+          }
+        })
+        .then((jobDetails) => {
+          jobDetails.data
+        })
+        .catch((error) => {
+          // Handle error
+          console.error("Error fetching jobDetails:", error);
+        });
+    }
   },
   components: { JobInfoCard }
 };
@@ -86,12 +106,14 @@ header {
   line-height: 1.5;
   max-height: 100vh;
   /* padding: 1rem; */
-  
-  
+
+
 }
-body{
+
+body {
   background: var(--color-);
 }
+
 nav {
   width: 100%;
   font-size: 12px;
