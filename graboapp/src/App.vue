@@ -1,18 +1,13 @@
 <template>
   <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
       <input v-model="inputValue" placeholder="Type something...">
+      <button @click="fetchData">Search</button>
       <div v-if="responseData">
         <h2>Data from API:</h2>
-        <p>{{ responseData }}</p>
+        <div>{{ responseData }}</div>
       </div>
       <div v-else>
         <p>Loading...</p>
@@ -44,57 +39,63 @@
 
 
   <v-container>
-      <v-card
-        title="Card title"
-        subtitle="Subtitle"
-        text="..."
-        variant="tonal"
-      ></v-card>
+    <v-card title="Card title" subtitle="Subtitle" text="..." variant="tonal"></v-card>
   </v-container>
 
   </v-layout>
 
 </template>
 
+<!----------Script-------------->
+
 <script>
+//imports
 import axios from 'axios';
 
+//variables
 const clientId = 'c003a37f-024f-462a-b36d-b001be4cd24a';
-let jobTitel = 'Referatsleiter';
 
 export default {
   data() {
     return {
+      inputValue: '', //für das input feld zum suchen
       responseData: null, // to store the response data
     };
   },
-  mounted() {
-    // Make a GET request when the component is mounted
-    this.fetchData();
-  },
   methods: {
     fetchData() {
-      // Axios GET request
-      let apiUrl = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/app/jobs?was=" + jobTitel;
+      // Axios GET request, url durchsucht anhand des input feldes
+      const apiUrl = `https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/app/jobs?was=${this.inputValue}`;
       axios
         .get(apiUrl
-        ,{
-        headers: {
-        'X-API-Key': clientId
-    }
-  })
+          , {
+            headers: {
+              'X-API-Key': clientId //API Key den wir der Api übergeben
+            }
+          })
         .then((response) => {
           // Handle successful response
-          //this.responseData = response.data;
-          let text = "";
 
-          for(let i = 0;  i < response.data.stellenangebote.length; i++){
-            text += response.data.stellenangebote[i].titel;
-          }
+          //test
+          const filteredData = response.data.stellenangebote
+            //.filter(job => /* Your filter condition here */)
+            .map(job => job.titel);
 
-          this.responseData = text;
-          
+          // Join the array elements into a string
+          this.responseData = filteredData.join(', ');
+
           console.log(this.responseData);
+          //test ende
+
+          // let text = "";
+
+          // for (let i = 0; i < response.data.stellenangebote.length; i++) {
+          //   text += response.data.stellenangebote[i].titel;
+          // }
+
+          // this.responseData = text;
+
+          // console.log(this.responseData);
         })
         .catch((error) => {
           // Handle error
@@ -104,6 +105,8 @@ export default {
   },
 };
 </script>
+
+<!----------CSS-------------->
 
 <style scoped>
 header {
