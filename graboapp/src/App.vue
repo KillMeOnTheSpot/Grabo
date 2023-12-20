@@ -20,8 +20,25 @@
     </div>
   </header>
 
+  <v-layout class="rounded rounded-md">
+    
+    <v-navigation-drawer>
+      <v-list>
+        <v-list-item title="Navigation drawer"></v-list-item>
+      </v-list>
+      <v-container fluid>
+        <p>{{ selected }}</p>
+        <v-checkbox v-model="selected" label="John" value="John"></v-checkbox>
+        <v-checkbox v-model="selected" label="Jacob" value="Jacob"></v-checkbox>
+      </v-container>
+    </v-navigation-drawer>
 
-  <v-container>
+    <v-app-bar title="Application bar"></v-app-bar>
+
+    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+      Main Content
+    </v-main>
+    <v-container>
     <v-chip closable> Chip </v-chip>
   </v-container>
 
@@ -34,6 +51,9 @@
         variant="tonal"
       ></v-card>
   </v-container>
+
+  </v-layout>
+
 </template>
 
 <script>
