@@ -7,7 +7,6 @@
       </v-list>
       <v-container fluid>
         <!-- Displays whats selected, both can be selected at the same time: Vollzeit Teilzeit Card... -->
-        <p>{{ selected }}</p>
         <v-checkbox v-model="selected" label="John" value="John"></v-checkbox>
         <v-checkbox v-model="selected" label="Jacob" value="Jacob"></v-checkbox>
       </v-container>
@@ -21,15 +20,12 @@
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
       <div v-if="responseData">
         <h2>Ergebnisse:</h2>
+        <!--Job Informationen werden an die jobInfoCard Komponente übergeben-->
+        <JobInfoCard v-for="(job, index) in responseData" :key="index" :jobInfo="{ titel: job.titel, beruf: job.beruf }"></JobInfoCard>
       </div>
       <div v-else>
         <p>Loading...</p>
       </div>
-      <v-container>
-        <v-card>
-          {{ responseData }}
-        </v-card>
-      </v-container>
 
     </v-main>
 
@@ -49,46 +45,40 @@ const clientId = 'c003a37f-024f-462a-b36d-b001be4cd24a';
 
 
 export default {
-    data() {
-        return {
-            inputValue: '',
-            responseData: null, // to store the response data
-        };
+  data() {
+    return {
+      inputValue: '',
+      responseData: null, // to store the response data
+    };
+  },
+  methods: {
+    fetchData() {
+      // Axios GET request, url durchsucht anhand des input feldes
+      const apiUrl = `https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/app/jobs?was=${this.inputValue}`;
+      axios
+        .get(apiUrl, {
+          headers: {
+            'X-API-Key': clientId //API Key 
+          }
+        })
+        .then((response) => {
+          // Handle successful response
+
+          //mapt die Daten, sodass später nur der Job Titel und Beruf übergeben wird
+          const filteredData = response.data.stellenangebote
+            .map(job => ({ titel: job.titel, beruf: job.beruf }));
+          this.responseData = filteredData;
+          
+          //console log hier später löschen, manchmal praktisch um die json anzuschauen
+          console.log(response.data);
+        })
+        .catch((error) => {
+          // Handle error
+          console.error("Error fetching data:", error);
+        });
     },
-    methods: {
-        fetchData() {
-            // Axios GET request, url durchsucht anhand des input feldes
-            const apiUrl = `https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/app/jobs?was=${this.inputValue}`;
-            axios
-                .get(apiUrl, {
-                headers: {
-                    'X-API-Key': clientId //API Key den wir der Api übergeben
-                }
-            })
-                .then((response) => {
-                // Handle successful response
-                //test
-                const filteredData = response.data.stellenangebote
-                    //.filter(job => /* Your filter condition here */)
-                    .map(job => job.titel);
-                // Join the array elements into a string
-                this.responseData = filteredData;
-                console.log(this.responseData);
-                //test ende
-                // let text = "";
-                // for (let i = 0; i < response.data.stellenangebote.length; i++) {
-                //   text += response.data.stellenangebote[i].titel;
-                // }
-                // this.responseData = text;
-                // console.log(this.responseData);
-            })
-                .catch((error) => {
-                // Handle error
-                console.error("Error fetching data:", error);
-            });
-        },
-    },
-    components: { JobInfoCard }
+  },
+  components: { JobInfoCard }
 };
 </script>
 
