@@ -40,11 +40,7 @@
       <v-chip closable> Chip </v-chip>
     </v-container>
 
-
-    <v-container>
-      <v-card title="Card title" subtitle="Subtitle" text="..." variant="tonal"></v-card>
-    </v-container>
-    <JobInfoCard></JobInfoCard>
+    <JobInfoCard jobTitel="Test"></JobInfoCard>
 
   </v-layout>
 </template>

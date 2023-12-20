@@ -1,6 +1,6 @@
 <template>
     <v-container>
-      <v-card title="Card title" subtitle="Subtitle" text="..." variant="tonal"></v-card>
+        <v-card :title="jobTitel" subtitle="Subtitle" text="..." variant="tonal"></v-card>
     </v-container>
 </template>
  
@@ -8,15 +8,11 @@
 <script>
 export default {
     name: 'jobInfoCard',
-    data() {
-        return {
-            
-        };
-
-    },
-    methods: {
+    props: {
+        jobTitel: String
     }
 }
+
 </script>
 
 <!--CSS-->  
