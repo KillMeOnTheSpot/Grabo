@@ -19,20 +19,21 @@
       </div>
     </div>
   </header>
- 
+
+
+  <v-container>
+    <v-chip closable> Chip </v-chip>
+  </v-container>
+
+
+  <v-container>
       <v-card
         title="Card title"
         subtitle="Subtitle"
         text="..."
         variant="tonal"
       ></v-card>
-
-    <v-container>
-      <v-chip closable>
-        Chip
-      </v-chip>
-    </v-container>
-
+  </v-container>
 </template>
 
 <script>
@@ -100,14 +101,6 @@ nav {
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
 }
 
 nav a {
