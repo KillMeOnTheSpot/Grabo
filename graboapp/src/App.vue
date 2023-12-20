@@ -1,6 +1,7 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <v-app-bar title="Step Metal" class="navbar">
+    <v-app-bar class="navbar">
+      <div class="logo">Step Metal</div>
       <input v-model="inputValue" placeholder="Beruf..." class="search">
       <button @click="fetchData">Suchen</button>
     </v-app-bar>
@@ -117,12 +118,20 @@ nav a {
 nav a:first-of-type {
   border: 0;
 }
-
+.logo{
+  margin-left: 1rem;
+  margin-right: 10rem;
+  font-size: 24px;
+}
 .navbar {
   text-align: left;
-  width: 70px;
+  /* width: 70px; */
 }
 
+/* .search {
+
+}
+ */
 
 /* Warum Responsive mit min größe statt max Größe ??? */
 /* @media (min-width: 1024px) {
