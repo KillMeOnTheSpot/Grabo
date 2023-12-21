@@ -25,9 +25,10 @@
       <div v-if="responseData">
         <h2>Ergebnisse:</h2>
         <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
-        <StudInfoCard v-for="(ausb, index) in responseData" :key="index" :studInfo="{
-          name: ausb.name,
-          nameUni: ausb.nameUni
+        <StudInfoCard v-for="(stud, index) in responseData" :key="index" :studInfo="{
+          name: stud.name,
+          nameUni: stud.nameUni,
+          logoURL: stud.logoURL
         }"></StudInfoCard>
       </div>
       <div v-else>
@@ -74,6 +75,7 @@ export default {
           const filteredData = response.data.items.map(item => ({
             name: item.studienangebot.studiBezeichnung,
             nameUni: item.studienangebot.studienanbieter.name,
+            logoURL: item.studienangebot.studienanbieter.logo.externalURL
           }));
 
           this.responseData = filteredData;
