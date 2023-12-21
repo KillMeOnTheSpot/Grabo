@@ -30,6 +30,6 @@ a,
   #app {
     display: flex;
     grid-template-columns: 1fr 1fr;
-    padding: 2 2rem;
+    padding-top: 50px ;
   }
 }
