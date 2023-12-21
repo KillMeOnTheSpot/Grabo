@@ -26,7 +26,8 @@
         <JobInfoCard v-for="(job, index) in responseData" :key="index" :jobInfo="{
           titel: job.titel,
           beruf: job.beruf,
-          id: job.id
+          hashId: job.hashId,
+          arbeitszeitmodelle: job.arbeitszeitmodelle
         }"></JobInfoCard>
       </div>
       <div v-else>
@@ -54,6 +55,7 @@ export default {
       inputValue: '',
       selected: ['John'],
       responseData: null, // to store the response data
+      responseDataDetails: null, // to store the response data for the job details
     };
   },
   methods: {
@@ -68,36 +70,21 @@ export default {
         })
         .then((response) => {
           // Handle successful response
-
+          console.log(response.data);
           //mapt die Daten, sodass später nur der Job Titel und Beruf übergeben wird
           const filteredData = response.data.stellenangebote
-            .map(job => ({ titel: job.titel, beruf: job.beruf, id: job.hashId }));
+            .map(job => ({ titel: job.titel, beruf: job.beruf, hashId: job.hashId, arbeitszeitmodelle: "n.a." }));
           this.responseData = filteredData;
 
           //console log hier später löschen, manchmal praktisch um die json anzuschauen
           console.log(response.data);
+
         })
         .catch((error) => {
           // Handle error
           console.error("Error fetching data:", error);
         });
     },
-    fetchJobDetails(hashId) {
-      const apiUrlDetails = `https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v2/jobdetails/${hashId}`;
-      axios
-        .get(apiUrlDetails, {
-          headers: {
-            'X-API-Key': clientId //API Key 
-          }
-        })
-        .then((jobDetails) => {
-          jobDetails.data
-        })
-        .catch((error) => {
-          // Handle error
-          console.error("Error fetching jobDetails:", error);
-        });
-    }
   },
   components: { JobInfoCard }
 };
