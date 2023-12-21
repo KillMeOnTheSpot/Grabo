@@ -2,14 +2,17 @@
   <v-layout class="rounded rounded-md">
     <v-app-bar class="navbar">
       <div class="logo">Step Metal</div>
-      <input v-model="inputValue" placeholder="Beruf..." class="search">
+
+      <v-text-field v-model="inputValue" clearable label="Search" variant="solo" class="searchfield" placeholder="johndoe@gmail.com"></v-text-field>
+      <v-text-field v-model="inputValue" clearable label="Search" variant="solo" class="searchfield" placeholder="johndoe@gmail.com"></v-text-field>
+
       <button @click="fetchData">Suchen</button>
     </v-app-bar>
-    <v-navigation-drawer>
+    <v-navigation-drawer class="sidebarcomponent">
       <v-list>
         <v-list-item title="Navigation drawer"></v-list-item>
       </v-list>
-      <v-container fluid>
+      <v-container fluid >
         <!-- Displays whats selected, both can be selected at the same time: Vollzeit Teilzeit Card... -->
         <v-checkbox v-model="selected" label="John" value="John"></v-checkbox>
         <v-checkbox v-model="selected" label="Jakob" value="Jakob"></v-checkbox>
@@ -68,7 +71,7 @@ export default {
 
           //mapt die Daten, sodass später nur der Job Titel und Beruf übergeben wird
           const filteredData = response.data.stellenangebote
-            .map(job => ({ titel: job.titel, beruf: job.beruf, id: hashId }));
+            .map(job => ({ titel: job.titel, beruf: job.beruf, id: job.hashId }));
           this.responseData = filteredData;
 
           //console log hier später löschen, manchmal praktisch um die json anzuschauen
@@ -104,9 +107,10 @@ export default {
 
 <style scoped>
 header {
-  line-height: 1.5;
-  max-height: 100vh;
-  /* padding: 1rem; */
+  /* line-height: 1.5; */
+  /* max-height: 150vh; */
+  height: 5rem;
+  justify-content: center;
 
 
 }
@@ -139,6 +143,15 @@ nav a:first-of-type {
 .navbar {
   text-align: left;
   /* width: 70px; */
+}
+
+.searchfield{
+margin-top: 1.5rem;
+/* height: 1rem; */
+}
+
+.sidebarcomponent{
+  top: 128px !important;
 }
 
 /* .search {
