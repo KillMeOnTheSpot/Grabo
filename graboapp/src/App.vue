@@ -33,6 +33,12 @@
           hashId: job.hashId,
           arbeitszeitmodelle: job.arbeitszeitmodelle
         }"></JobInfoCard>
+        <h2>Ergebnisse:</h2>
+        <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
+        <StudInfoCard v-for="(ausb, index) in responseData" :key="index" :studInfo="{
+          name: ausb.name,
+          nameUni: ausb.nameUni
+        }"></StudInfoCard>
       </div>
       <div v-else>
         <p>Loading...</p>
@@ -46,10 +52,10 @@
 <script>
 //imports
 import axios from 'axios';
-import JobInfoCard from './components/jobInfoCard.vue';
+import StudInfoCard from './components/StudInfoCard.vue';
 
 //variables
-const clientId = 'c003a37f-024f-462a-b36d-b001be4cd24a';
+const clientId = '5aee2cfe-1709-48a9-951d-eb48f8f73a74';
 
 
 
@@ -59,13 +65,12 @@ export default {
       inputValue: '',
       selected: ['John'],
       responseData: null, // to store the response data
-      responseDataDetails: null, // to store the response data for the job details
     };
   },
   methods: {
     fetchData() {
       // Axios GET request, url durchsucht anhand des input feldes
-      const apiUrl = `https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/app/jobs?was=${this.inputValue}`;
+      const apiUrl = `https://rest.arbeitsagentur.de/infosysbub/studisu/pc/v1/studienangebote?sw=${this.inputValue}`;
       axios
         .get(apiUrl, {
           headers: {
@@ -75,13 +80,17 @@ export default {
         .then((response) => {
           // Handle successful response
           console.log(response.data);
-          //mapt die Daten, sodass später nur der Job Titel und Beruf übergeben wird
-          const filteredData = response.data.stellenangebote
-            .map(job => ({ titel: job.titel, beruf: job.beruf, hashId: job.hashId, arbeitszeitmodelle: "n.a." }));
+          //mapt die Daten, sodass später nur der Stud Titel und Beruf übergeben wird
+          const filteredData = response.data.items.map(item => ({
+            name: item.studienangebot.studiBezeichnung,
+            nameUni: item.studienangebot.studienanbieter.name,
+          }));
+
           this.responseData = filteredData;
 
           //console log hier später löschen, manchmal praktisch um die json anzuschauen
-          console.log(response.data);
+          console.log(filteredData);
+          console.log(this.responseData);
 
         })
         .catch((error) => {
@@ -90,7 +99,7 @@ export default {
         });
     },
   },
-  components: { JobInfoCard }
+  components: { StudInfoCard }
 };
 </script>
 
@@ -126,11 +135,13 @@ nav a {
 nav a:first-of-type {
   border: 0;
 }
-.logo{
+
+.logo {
   margin-left: 1rem;
   margin-right: 10rem;
   font-size: 24px;
 }
+
 .navbar {
   text-align: left;
   /* width: 70px; */
@@ -178,5 +189,4 @@ margin-right: 1rem;
     
   }
 
-} */
-</style>
+} */</style>
