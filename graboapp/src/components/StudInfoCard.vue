@@ -1,7 +1,8 @@
 <template>
     <v-container>
-        <v-card :title="studInfo.name" :subtitle=studInfo.nameUni text="test" variant="tonal">
+        <v-card :title="studInfo.name" :subtitle=studInfo.nameUni variant="tonal">
             <img :src="studInfo.logoURL" alt="logo des Studiengangs" width=200>
+            <p v-html="studInfo.studInhalt"></p>
         </v-card>   
     </v-container>
 </template>
@@ -25,4 +26,6 @@ export default {
 </script>
 
 <!--CSS-->  
-<style scoped></style>
+<style scoped>
+    
+</style>
