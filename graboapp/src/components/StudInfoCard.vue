@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        <!--Lädt die Daten aus der props "studInfo"-->
         <v-card :title="studInfo.name" :subtitle=studInfo.nameUni variant="tonal">
             <img :src="studInfo.logoURL" alt="logo des Studiengangs" width=200>
             <p v-html="studInfo.studInhalt"></p>
@@ -7,25 +8,23 @@
     </v-container>
 </template>
  
-<!--Script-->
+<!----------Script----------->
 <script>
-
-export default {
-    name: 'studInfoCard',
-    props: {
-        studInfo: Object
-    },
-    data() {
-        return {
-            arbeitszeitmodell: "n.a"
-        };
-    },
+    export default {
+        name: 'studInfoCard',
+        props: {
+            studInfo: Object
+        },
+        data() {
+            return {
+                //kann man maybe löschen
+                arbeitszeitmodell: "n.a"
+            };
+        },
 }
-
-
 </script>
 
-<!--CSS-->  
+<!----------CSS---------->  
 <style scoped>
     
 </style>

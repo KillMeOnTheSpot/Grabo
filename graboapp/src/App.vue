@@ -1,5 +1,7 @@
 <template>
   <v-layout class="rounded rounded-md">
+
+    <!------------Navbar------------>
     <v-app-bar class="navbar">
       <div class="logo">Step Metal</div>
       <div class="searchbars">
@@ -10,6 +12,8 @@
       </div>
       <v-btn @click="fetchData">Suchen</v-btn>
     </v-app-bar>
+
+    <!------------Sidebar------------>
     <v-navigation-drawer class="sidebarcomponent">
       <div class="sidebar">
         <v-card>
@@ -21,9 +25,11 @@
         </v-card>
       </div>
     </v-navigation-drawer>
+
+    <!------------Main (Ergebnisse)------------>
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
       <div v-if="filteredResponseData">
-        <h2 class="results">Ergebnisse:</h2>
+        <h2 class="results">Such Ergebnisse:</h2>
         <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
         <StudInfoCard v-for="(stud, index) in filteredResponseData" :key="index" :studInfo="{
           name: stud.name,
@@ -33,15 +39,17 @@
         }">
         </StudInfoCard>
       </div>
+      <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
       <div v-else>
-        <p>Loading...</p>
+        <p>no results yet</p>
       </div>
     </v-main>
+
   </v-layout>
 </template>
 
-<!----------Script-------------->
 
+<!------------------------Script---------------------------->
 <script>
 //imports
 import axios from 'axios';
@@ -51,19 +59,20 @@ import FilterCheckbox from './components/FilterCheckbox.vue';
 //variables
 const clientId = '5aee2cfe-1709-48a9-951d-eb48f8f73a74';
 
-
-
+//exported to main
 export default {
+  //data
   data() {
     return {
       inputValue: '',
-      selected: ['John'],
       istDualesStudium: '',
       responseData: null, // to store the response data
       filteredResponseData: null,
     };
   },
+  //methods
   methods: {
+    //fetches data, when the search button is pressed
     fetchData() {
       // Axios GET request, url durchsucht anhand des input feldes
       const apiUrl = `https://rest.arbeitsagentur.de/infosysbub/studisu/pc/v1/studienangebote?sw=${this.inputValue}`;
@@ -77,7 +86,7 @@ export default {
           // Handle successful response
           console.log(response.data);
           this.responseData = response.data;
-          //mapt die Daten, sodass später nur der Stud Titel und Beruf übergeben wird
+          //mapt die Daten, sodass später nur bestimmte Daten angezeigt werden
           const filteredData = response.data.items.map(item => ({
             name: item.studienangebot.studiBezeichnung,
             nameUni: item.studienangebot.studienanbieter.name,
@@ -85,6 +94,7 @@ export default {
             logoURL: item.studienangebot.studienanbieter.logo.externalURL
           }));
 
+          //legt die Daten in filteredData ab, die Original Abfrage ist noch in responseData gespeichert 
           this.filteredResponseData = filteredData;
 
           //console log hier später löschen, manchmal praktisch um die json anzuschauen
@@ -100,10 +110,13 @@ export default {
     handleSelectionChange(selectedValues) {
 
     },
+    //filtert die Daten, wenn die "Duales Studium" Checkbox ausgewählt ist
     istDualesStudiumChange(selectedValues) {
+
       console.log("repsonseData:", this.responseData);
       console.log("value?:", parseInt(selectedValues[1]));
-      // filter the already loaded responseData
+
+      // if Abfrage, checkt vereinfacht gesagt, ob die Checkbox selected oder nicht selected ist
       if (!isNaN(parseInt(selectedValues[1]))) {
         const filteredData = this.responseData.items
           //filter for Duales Studium (Duales Studium hat die ID 5). Parse Int wandelt selectedValues von "5" zu 5 
@@ -118,6 +131,7 @@ export default {
         this.filteredResponseData = filteredData;
         console.log("filtered repsonseData:", this.filteredResponseData);
       }
+      //else lädt die Daten normal, wenn die Checkbox deselected wird
       else{
         const filteredData = this.responseData.items
           .map(item => ({
@@ -130,15 +144,15 @@ export default {
         this.filteredResponseData = filteredData;
         console.log("filtered repsonseData:", this.filteredResponseData);
       }
-
     }
   },
+  //components
   components: { StudInfoCard, FilterCheckbox }
 };
 </script>
 
-<!----------CSS-------------->
 
+<!------------------------CSS---------------------------->
 <style scoped>
 header {
   /* line-height: 1.5; */

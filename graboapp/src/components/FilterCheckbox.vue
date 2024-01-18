@@ -5,7 +5,7 @@
     </v-container>
 </template>
  
-<!--Script-->
+<!------------Script------------>
 <script>
 
 export default {
@@ -20,6 +20,7 @@ export default {
         };
     },
     methods: {
+        //emitted ein Event an App.vue wenn die Checkbox sich verändert
         emitIstDualesStudium() {
             console.log("Duales Studium?", this.istDualesStudium);
             this.$emit('istDualesStudiumChanged', this.istDualesStudium);
@@ -28,6 +29,6 @@ export default {
 }
 </script>
 
-<!--CSS-->  
+<!-----------CSS----------->  
 <style scoped></style>
 
