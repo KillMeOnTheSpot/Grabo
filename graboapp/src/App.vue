@@ -36,14 +36,17 @@
             name: stud.name,
             nameUni: stud.nameUni,
             studInhalt: stud.studInhalt,
-            logoURL: stud.logoURL
+            logoURL: stud.logoURL,
+            abschlussGrad: stud.abschlussGrad,
           }">
           </StudInfoCard>
         </div>
         <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
         <div v-else class="welcometext">
-          <v-icon start icon="mdi-information" color="primary"></v-icon>
-          <p>press search to display results!</p>
+<!--           <v-icon start icon="mdi-information" color="primary"></v-icon> -->
+          <h1 class="welcome">Willkommen!</h1>
+          <p class="description"><span class="descr_bold">StudiScout®</span> hilft dir dabei, das <span class="descr_bold">Traum-Studium</span> in deiner Nähe zu finden!<br><br>
+          Suche einfach nach einem <span class="descr_bold">Studiengang</span> ,der dich interressiert und passe die <span class="descr_bold">Parameter</span> für dich an!</p>
         </div>
       </v-main>
     </div>
@@ -115,16 +118,15 @@ export default {
             console.log("is valid, index is: " + this.index);
             this.index++;
             this.fetchData(inputValueName);
+            //recursive function call
             this.filterAndDisplayData();
           }
           else if(this.responseData.items.length == 0){
             this.finishedLoading = true;
             this.filteredResponseData = 'not found';
-            document.querySelector("#searchButton").classList.remove("inactive");
           }
           else{
             this.finishedLoading = true;
-            document.querySelector("#searchButton").classList.remove("inactive");
           }
           
         })
@@ -132,7 +134,6 @@ export default {
           // Handle error
           this.filteredResponseData = 'error';
           this.finishedLoading = true;
-          document.querySelector("#searchButton").classList.remove("inactive");
           console.error(this.filteredResponseData);
           console.error("Error fetching data:", error);
         });
@@ -141,14 +142,9 @@ export default {
       if (inputValueName.length != 0 && this.finishedLoading) {
         console.log("2")
         this.finishedLoading = false;
-        document.querySelector("#searchButton").classList.add("inactive");
         this.index = 1;
         this.responseData = { items: [] };
         this.fetchData(inputValueName);
-      }
-      else{
-        console.log("1")
-        this.finishedLoading = false;
       }
     },
     handleItemSelect(selectedIds) {
@@ -178,9 +174,6 @@ export default {
       }
       this.filterAndDisplayData();
     },
-    handleLoadingFinished(){
-
-    },
     filterAndDisplayData() {
       this.filteredResponseData=='loading'
       //checks, if there is data to be displayed
@@ -204,6 +197,8 @@ export default {
           name: item.studienangebot.studiBezeichnung,
           nameUni: item.studienangebot.studienanbieter.name,
           studInhalt: item.studienangebot.studiInhalt,
+          abschlussGrad: item.studienangebot.abschlussgrad.label,
+
           // from ChatGPT: Use optional chaining and nullish coalescing in case no logo is there
           logoURL: item.studienangebot.studienanbieter.logo?.externalURL ?? this.placeholderImage
         }));
@@ -253,7 +248,34 @@ header {
   margin-right: 10px;
   width: 25%;
 }
-.sidebarcard{
+.resultsnumber{
+  margin: 1rem;
+}
+.welcometext{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.welcome{
+  font-size: 80px;
+  font-weight: 600;
+  color: #23274b;
+}
+
+.description{
+  font-size: 24px;
+  color: #525782;
+  font-weight: 300;
+}
+
+.descr_bold{
+  font-weight: 700;
+  color: #23274b;
+}
+
+.card{
   margin-bottom: 20px;
   box-shadow: none;
   box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
@@ -270,9 +292,9 @@ header {
   margin: 1rem;
 }
 .welcometext{
-  display: flex;
+  /* display: flex; */
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100%;
 }
 </style>
