@@ -9,23 +9,33 @@
 
     <!------------Sidebar------------>
     <div class="bodycomponents">
-      <v-container class="sidebar">
+      <v-container>
+        <div class="sidebar">
           <v-card class="card">
+
             <!--Filter Checkobxen zur Sortierung-->
             <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
               :checkboxLabel="checkbox.label" :dataLocation="checkbox.location" :dataValue="checkbox.value"
               @checkboxChanged="handleCheckboxChanged" />
           </v-card>
+        </div>
     </v-container>
       
 
       <!------------Main (Ergebnisse)------------>
       <v-main class="cards">
         <div v-if="filteredResponseData=='error'">
-          <p>error loading entries, please make sure you have a stable internet connection</p>
+          <p>error fetching data, no results found</p>
+        </div>
+        <div v-else-if="filteredResponseData=='not found'">
+          <p>No results found, sorry</p>
+        </div>
+        <div v-else-if="filteredResponseData=='loading'">
+          <p>loading...</p>
         </div>
         <div v-else-if="filteredResponseData">
           <h2 class="results">Such Ergebnisse:</h2>
+          <p>{{this.index * 20}} Ergebnisse gefunden, {{ finishedLoading }}</p>
           <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
           <StudInfoCard v-for="(stud, index) in filteredResponseData" :key="index" :studInfo="{
             name: stud.name,
@@ -65,6 +75,9 @@ export default {
       responseData: { items: [] },
       filters: [],
       filteredResponseData: null,
+      finishedLoading: true,
+
+      upperCallLimit: 50,
 
       clientId: '5aee2cfe-1709-48a9-951d-eb48f8f73a74', //client id for the API
 
@@ -84,6 +97,9 @@ export default {
   methods: {
     //fetches data, when the search button is pressed
     fetchData(inputValueName) {
+      this.filteredResponseData = 'loading';
+
+      console.log(this.filteredResponseData);
       // Axios GET request, url durchsucht anhand des input feldes
       let apiUrl = `https://rest.arbeitsagentur.de/infosysbub/studisu/pc/v1/studienangebote?sw=${inputValueName}&pg=${this.index}`;
       axios
@@ -94,14 +110,23 @@ export default {
         })
         .then((response) => {
           // Handle successful response
+          
           this.responseData.items = this.responseData.items.concat(response.data.items);
 
-          if (response.data.items.length > 0) {
+          if (response.data.items.length > 0 && this.index < this.upperCallLimit) {
             console.log("is valid, index is: " + this.index);
             this.index++;
             this.fetchData(inputValueName);
             this.filterAndDisplayData();
           }
+          else if(this.responseData.items.length == 0){
+            this.filteredResponseData = 'not found';
+          }
+          else{
+            this.finishedLoading = true;
+            document.querySelector("#searchButton").classList.remove("inactive");
+          }
+          
         })
         .catch((error) => {
           // Handle error
@@ -111,10 +136,14 @@ export default {
         });
       // }
     },
-    handleSearch(inputValueName){
-      this.index = 1;
-      this.responseData = { items: [] };
-      this.fetchData(inputValueName);
+    handleSearch(inputValueName) {
+      if (inputValueName.length != 0 && this.finishedLoading) {
+        this.finishedLoading = false;
+        document.querySelector("#searchButton").classList.add("inactive");
+        this.index = 1;
+        this.responseData = { items: [] };
+        this.fetchData(inputValueName);
+      }
     },
     handleItemSelect(selectedId) {
       console.log(selectedId);
@@ -142,8 +171,9 @@ export default {
       this.filterAndDisplayData();
     },
     filterAndDisplayData() {
+      this.filteredResponseData=='loading'
       //checks, if there is data to be displayed
-      if (this.responseData) {
+      if (this.responseData.items.length > 0) {
         let filteredData = this.responseData;
 
         console.log(this.responseData);
@@ -205,7 +235,7 @@ body {
   margin-top: 5rem;
 }
 
-/* nav {
+nav {
   width: 100%;
   font-size: 12px;
   text-align: left;
@@ -220,7 +250,7 @@ nav a {
 
 nav a:first-of-type {
   border: 0;
-} */
+}
 
 .logo {
   margin-left: 1rem;
@@ -228,12 +258,12 @@ nav a:first-of-type {
   font-size: 24px;
 }
 
-/* .navbar {
+.navbar {
   text-align: left;
-  width: 70px;
-} */
+  /* width: 70px; */
+}
 
-/* .searchbars {
+.searchbars {
   display: flex;
   width: 700px;
 }
@@ -241,19 +271,23 @@ nav a:first-of-type {
 .searchfield {
   margin-top: 1.5rem;
   margin-right: 1rem;
-} */
+}
 .sidebar {
-  margin-top: 2rem;
+  position: flex;
+  margin-top: 50px;
+  /* margin-left: 10px; */
+  margin-right: 10px;
+  
 }
 .cards{
   min-height: 300px;
   max-width: 70%;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
+  --v-layout-left: 0 !important;
 }
 .card{
   margin-bottom: 20px;
   /* border: 2px solid #ccc; */
-  /* box-shadow: none; */
+  box-shadow: none;
 }
 .cardtitle{
   border-radius: 16px 16px 0px 0px;

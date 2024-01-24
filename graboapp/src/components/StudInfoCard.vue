@@ -6,7 +6,9 @@
             <p v-html="studInfo.studInhalt"></p>
         </v-card>
     </v-container>
+    <p v-text="studInfo.studInhalt"></p>
 </template>
+
  
 <!----------Script----------->
 <script>
