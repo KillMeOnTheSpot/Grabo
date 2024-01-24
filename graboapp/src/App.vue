@@ -3,7 +3,7 @@
     <!------------Navbar------------>
     <v-app-bar class="navbar">
       <img src="./assets/logo.png" class="logo">
-      <SearchBar @searchData="handleSearch" :stopLoading="finishedLoading" class="searchbar"></SearchBar>
+      <SearchBar @searchData="handleSearch" :stopLoading="finishedLoading"></SearchBar>
     </v-app-bar>
     <!------------Sidebar------------>
     <div class="bodycomponents">
@@ -137,11 +137,16 @@ export default {
     },
     handleSearch(inputValueName) {
       if (inputValueName.length != 0 && this.finishedLoading) {
+        console.log("2")
         this.finishedLoading = false;
         document.querySelector("#searchButton").classList.add("inactive");
         this.index = 1;
         this.responseData = { items: [] };
         this.fetchData(inputValueName);
+      }
+      else{
+        console.log("1")
+        this.finishedLoading = false;
       }
     },
     handleItemSelect(selectedIds) {
