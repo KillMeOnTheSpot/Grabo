@@ -3,12 +3,12 @@
     <!------------Navbar------------>
     <v-app-bar class="navbar">
       <img src="./assets/logo.png" class="logo">
-      <SearchBar @searchData="handleSearch" class="searchbar"></SearchBar>
+      <SearchBar @searchData="handleSearch" :stopLoading="finishedLoading" class="searchbar"></SearchBar>
     </v-app-bar>
     <!------------Sidebar------------>
     <div class="bodycomponents">
       <v-container class="sidebar">
-        <Multiselect @item-selected="handleItemSelect" class="dropdown"></Multiselect>
+        <Multiselect @item-selected="handleItemSelect"></Multiselect>
         <v-card class="card">
           <!--Filter Checkobxen zur Sortierung-->
           <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
@@ -25,6 +25,7 @@
           <p>No results found, sorry</p>
         </div>
         <div v-else-if="filteredResponseData=='loading'">
+          <v-icon icon="fa:fas fa-circle-notch fa-spin"></v-icon>
           <p>loading...</p>
         </div>
         <div v-else-if="filteredResponseData">
@@ -41,6 +42,7 @@
         </div>
         <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
         <div v-else class="pcontainer">
+          <v-icon start icon="mdi-information" color="primary"></v-icon>
           <p>press search to display results!</p>
         </div>
       </v-main>
@@ -71,18 +73,18 @@ export default {
       filteredResponseData: null,
       finishedLoading: true,
 
-      upperCallLimit: 50,
+      upperCallLimit: 51,
 
       clientId: '5aee2cfe-1709-48a9-951d-eb48f8f73a74', //client id for the API
 
       index: 1,
-      placeholderImage: placeholderImage,
 
+      placeholderImage: placeholderImage,
 
       checkboxes: [
         { id: 1, label: 'Duales Studium', location: "item.studienangebot.studienmodelle.some(model => model.id === 5)", value: true },
-        { id: 2, label: 'Checkbox 2', location: "item.studienangebot.id", value: "73209814" },
-        { id: 3, label: 'TH', location: "item.studienangebot.region.Key", value: "TH" },
+        { id: 2, label: 'Bachelor', location: "item.studienangebot.abschlussgrad.id", value: 2 },
+        { id: 3, label: 'Master', location: "item.studienangebot.abschlussgrad.id", value: "NI" },
         // Add more checkboxes as needed
       ],
     };
@@ -169,8 +171,8 @@ export default {
       }
       this.filterAndDisplayData();
     },
-    handleLoadMoreButton(){
-      this.upperCallLimit +=100
+    handleLoadingFinished(){
+
     },
     filterAndDisplayData() {
       this.filteredResponseData=='loading'
@@ -237,6 +239,8 @@ body {
   margin: auto;
   margin-top: 5rem;
   margin-bottom: 40rem;
+  /* margin-right: 90rem; */
+  margin-left: 0;
 }
 
 nav {
@@ -277,6 +281,9 @@ nav a:first-of-type {
   margin-right: 10px;
   width: 14vw;
   /* box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12)); */
+}
+.v-field_overlay{
+  background-color: white;
 }
 .cards{
   min-height: 300px;

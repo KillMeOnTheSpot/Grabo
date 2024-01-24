@@ -4,7 +4,7 @@
         <v-card class="studicard">
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
-                <v-card-title  class="text-h5"> {{ studInfo.name }}</v-card-title>
+                <v-card-title  class="text-h5, title"> {{ studInfo.name }}</v-card-title>
                 <v-card-subtitle class="subtitle">{{ studInfo.nameUni }}</v-card-subtitle>
                 <p v-html="studInfo.studInhalt" class="cardtext"></p>
               </div>
@@ -43,6 +43,9 @@
     width: 100%;
     float: right;
     color: #3a3e64;
+}
+.title{
+    padding: 0;
 }
 .subtitle{
     padding: 0;

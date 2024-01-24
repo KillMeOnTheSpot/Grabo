@@ -8,7 +8,7 @@
       variant="solo-filled"
       multiple  
     ></v-autocomplete>
-  </template>
+</template>
   
   <script>
   export default {
@@ -46,4 +46,5 @@
     },
   };
   </script>
-  
+  <style scoped>
+</style>
