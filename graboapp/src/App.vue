@@ -44,7 +44,7 @@
         <div v-else class="pcontainer">
 <!--           <v-icon start icon="mdi-information" color="primary"></v-icon> -->
           <h1 class="welcome">Willkommen!</h1>
-          <p class="description"><span class="descr_bold">StudiScout®</span> hilft dir dabei, das <span class="descr_bold">Traum-Studium</span> in deiner Nähe zu finden!<br><br>
+          <p class="description"><span class="descr_bold">StudiScout®</span> hilft dir dabei, das <span class="descr_bold">Traum-Studium</span> in deiner Nähe zu finden!<br>
           Suche einfach nach einem <span class="descr_bold">Studiengang</span> ,der dich interressiert und passe die <span class="descr_bold">Parameter</span> für dich an!</p>
         </div>
       </v-main>
@@ -281,9 +281,8 @@ body {
   /* --v-layout-left: 0 !important; */
 }
 .pcontainer{
-  display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100%;
   
 }
