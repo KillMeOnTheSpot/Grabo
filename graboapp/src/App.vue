@@ -9,7 +9,7 @@
     <!------------Sidebar------------>
     <div class="bodycomponents">
       <v-container class="sidebar">
-        <Multiselect @item-selected="handleItemSelect"></Multiselect>
+        <Multiselect @item-selected="handleItemSelect" class="dropdown"></Multiselect>
         <v-card class="card">
           <!--Filter Checkobxen zur Sortierung-->
           <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
@@ -41,7 +41,7 @@
           </StudInfoCard>
         </div>
         <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
-        <div v-else>
+        <div v-else class="pcontainer">
           <p>press search to display results!</p>
         </div>
       </v-main>
@@ -228,6 +228,7 @@ body {
   display: flex;
   margin: auto;
   margin-top: 5rem;
+  margin-bottom: 40rem;
 }
 
 nav {
@@ -270,19 +271,28 @@ nav a:first-of-type {
 .sidebar {
   position: flex;
   margin-top: 50px;
-  /* margin-left: 10px; */
   margin-right: 10px;
-  
+  width: 14vw;
+  /* box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12)); */
 }
 .cards{
   min-height: 300px;
-  max-width: 70%;
-  --v-layout-left: 0 !important;
+  width: 50vw;
+  /* min-width: 45rem; */
+  /* width: 700px; */
+  /* --v-layout-left: 0 !important; */
+}
+.pcontainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 .card{
   margin-bottom: 20px;
   /* border: 2px solid #ccc; */
   box-shadow: none;
+  box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
 }
 .cardtitle{
   border-radius: 16px 16px 0px 0px;
