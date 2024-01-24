@@ -1,6 +1,5 @@
 <template>
-  <v-layout class="rounded rounded-md">
-
+  <v-layout class="rounded rounded-md, content">
     <!------------Navbar------------>
     <v-app-bar class="navbar">
       <div class="logo">Step Metal</div>
@@ -9,55 +8,39 @@
     </v-app-bar>
 
     <!------------Sidebar------------>
-    <v-navigation-drawer class="sidebarcomponent">
-      <div class="sidebar">
-        <v-card class="card">
-          <v-list>
-            <v-list-item title="Abschlussart" class="cardtitle"></v-list-item>
-          </v-list>
-          <!--Filter Checkobx zur Sortierung-->
-          <FilterCheckbox @istDualesStudiumChanged="istDualesStudiumChange"></FilterCheckbox>
-        </v-card>
-        <v-card class="card">
-          <v-list>
-            <v-list-item title="Abschlussart"></v-list-item>
-          </v-list>
-          <!--Filter Checkobx zur Sortierung-->
-          <FilterCheckbox @istDualesStudiumChanged="istDualesStudiumChange"></FilterCheckbox>
-        </v-card>
-        <v-card class="card">
-          <v-list>
-            <v-list-item title="Abschlussart"></v-list-item>
-          </v-list>
-          <!--Filter Checkobxen zur Sortierung-->
-          <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
-            :checkboxLabel="checkbox.label" :dataLocation="checkbox.location" :dataValue="checkbox.value"
-            @checkboxChanged="handleCheckboxChanged" />
-        </v-card>
-      </div>
-    </v-navigation-drawer>
+    <div class="bodycomponents">
+      <v-container>
+        <div class="sidebar">
+          <v-card class="card">
 
-    
+            <!--Filter Checkobxen zur Sortierung-->
+            <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
+              :checkboxLabel="checkbox.label" :dataLocation="checkbox.location" :dataValue="checkbox.value"
+              @checkboxChanged="handleCheckboxChanged" />
+          </v-card>
+        </div>
+    </v-container>
+      
 
-    <!------------Main (Ergebnisse)------------>
-    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      <div v-if="filteredResponseData">
-        <h2 class="results">Such Ergebnisse:</h2>
-        <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
-        <StudInfoCard v-for="(stud, index) in filteredResponseData" :key="index" :studInfo="{
-          name: stud.name,
-          nameUni: stud.nameUni,
-          studInhalt: stud.studInhalt,
-          logoURL: stud.logoURL
-        }">
-        </StudInfoCard>
-      </div>
-      <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
-      <div v-else>
-        <p>no results yet</p>
-      </div>
-    </v-main>
-
+      <!------------Main (Ergebnisse)------------>
+      <v-main class="cards">
+        <div v-if="filteredResponseData">
+          <h2 class="results">Such Ergebnisse:</h2>
+          <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
+          <StudInfoCard v-for="(stud, index) in filteredResponseData" :key="index" :studInfo="{
+            name: stud.name,
+            nameUni: stud.nameUni,
+            studInhalt: stud.studInhalt,
+            logoURL: stud.logoURL
+          }">
+          </StudInfoCard>
+        </div>
+        <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
+        <div v-else>
+          <p>no results yet</p>
+        </div>
+      </v-main>
+    </div>
   </v-layout>
 </template>
 
@@ -192,21 +175,32 @@ export default {
   components: { StudInfoCard, DynamicFilterCheckbox, SearchBar, Multiselect }
 };
 </script>
-
-
 <!------------------------CSS---------------------------->
 <style scoped>
+*{
+  font-family: "neue-haas-grotesk-display", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
 header {
   /* line-height: 1.5; */
   /* max-height: 150vh; */
-  height: 5rem;
+  height: 10rem;
   justify-content: center;
-
-
 }
 
 body {
   background: var(--color-);
+}
+
+.content{
+  display: flex;
+}
+
+.bodycomponents{
+  display: flex;
+  margin: auto;
 }
 
 nav {
@@ -246,32 +240,34 @@ nav a:first-of-type {
   margin-top: 1.5rem;
   margin-right: 1rem;
 }
-
 .sidebar {
   position: flex;
   margin-top: 50px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   margin-right: 10px;
+  
 }
-
+.cards{
+  min-height: 300px;
+  max-width: 70%;
+  --v-layout-left: 0 !important;
+}
 .card{
   margin-bottom: 20px;
   /* border: 2px solid #ccc; */
-
-  /* border-radius: 20px; */
   box-shadow: none;
-  /* box-shadow: 0px 0px 0px 1px inset; */
 }
 .cardtitle{
   border-radius: 16px 16px 0px 0px;
-  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.3)inset;
-
+  /* box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.3)inset; */
 }
 .sidebarcomponent{
-margin-left: 400px;
+/* margin-left: 400px; */
+align-items: center;
+justify-content: center;
 border: none;
+display: flex;
 }
-
 .results {
   padding-left: 15px;
 }
