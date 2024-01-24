@@ -1,9 +1,17 @@
 <template>
-    <v-container class="card">
+    <v-container class="cardcontainer">
         <!--Lädt die Daten aus der props "studInfo"-->
-        <v-card :title="studInfo.name" :subtitle=studInfo.nameUni>
-            <img :src="studInfo.logoURL" alt="logo des Studiengangs" width=200>
-            <p v-html="studInfo.studInhalt"></p>
+        <v-card class="studicard">
+            <div class="d-flex flex-no-wrap justify-space-between">
+              <div>
+                <v-title  class="text-h5"> {{ studInfo.name }}</v-title>
+                <v-card-subtitle class="subtitle">{{ studInfo.nameUni }}</v-card-subtitle>
+                <p v-html="studInfo.studInhalt" class="cardtext"></p>
+              </div>
+              <v-avatar class="ma-3" size="125" rounded="0">
+                <v-img :src="studInfo.logoURL" alt="logo des Studiengangs" :width="125"  class="cardimage"></v-img>
+              </v-avatar>
+            </div>
         </v-card>
     </v-container>
 </template>
@@ -23,8 +31,25 @@
         },
 }
 </script>
-
 <!----------CSS---------->  
 <style scoped>
- 
+
+.cardcontainer{
+    display: flex;
+}
+.studicard{
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+    width: 100%;
+    float: right;
+}
+.subtitle{
+    padding: 0;
+}
+.cardimage{
+    max-width: 150px;
+}
+.cardtext{
+    padding-top: 2rem;
+}
 </style>
