@@ -243,11 +243,11 @@ header {
   position: flex;
   margin-top: 50px;
   margin-right: 10px;
-  width: 25%;
+  width: 30%;
 }
 .studicards{
   min-height: 300px;
-  width: 75%;
+  width: 70%;
 }
 .results {
   padding-left: 15px;
@@ -257,10 +257,11 @@ header {
 }
 .welcometext{
   display: flex;
-  justify-content: center;
+  justify-content: top;
   align-items: flex-start;
   height: 100%;
   flex-direction: column;
+
 }
 .welcome{
   font-size: 80px;
