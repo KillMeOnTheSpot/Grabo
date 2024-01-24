@@ -27,8 +27,7 @@ export default {
 
 <!-----------CSS----------->  
 <style scoped>
-/* .inactive {
-    background-color: brown;
-} */
-
+.searchfield{
+    padding-top: 1.5rem;
+}
 </style>
