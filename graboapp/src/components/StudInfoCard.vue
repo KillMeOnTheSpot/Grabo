@@ -3,7 +3,7 @@
         <!--Lädt die Daten aus der props "studInfo"-->
         <v-card class="studicard">
             <div class="d-flex flex-no-wrap justify-space-between">
-              <div>
+              <div class="left">
                 <v-card-title  class="text-h5, title"> {{ studInfo.name }}</v-card-title>
                 <v-card-subtitle class="subtitle">{{ studInfo.nameUni }}</v-card-subtitle>
                 <p v-html="studInfo.studInhalt" class="cardtext"></p>
@@ -42,7 +42,15 @@
     padding: 1rem 1rem 1rem 1rem;
     width: 100%;
     float: right;
+    color: #3a3e64;
 }
+
+.left{
+
+    max-width: 70%;
+    
+}
+
 .title{
     padding: 0;
 }

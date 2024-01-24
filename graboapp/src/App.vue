@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="rounded rounded-md, content">
+  <v-layout class="rounded rounded-md, content" >
     <!------------Navbar------------>
     <v-app-bar class="navbar">
       <img src="./assets/logo.png" class="logo">
@@ -30,7 +30,7 @@
         </div>
         <div v-else-if="filteredResponseData">
           <h2 class="results">Such Ergebnisse:</h2>
-          <p>{{this.filteredResponseData.length}} Ergebnisse gefunden</p>
+          <p class="resultsnumber">{{this.filteredResponseData.length}} Ergebnisse gefunden</p>
           <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
           <StudInfoCard v-for="(stud, index) in filteredResponseData" :key="index" :studInfo="{
             name: stud.name,
@@ -221,6 +221,7 @@ export default {
   font-family: "neue-haas-grotesk-display", sans-serif;
   font-weight: 700;
   font-style: normal;
+  color: #3b417c;
 }
 
 header {
@@ -236,32 +237,14 @@ body {
 
 .content{
   display: flex;
+  justify-content: center;
 }
 
 .bodycomponents{
+  width: 80%;
   display: flex;
-  margin: auto;
   margin-top: 5rem;
-  margin-bottom: 40rem;
-  /* margin-right: 90rem; */
   margin-left: 0;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: left;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-  text-align: right;
-}
-
-nav a:first-of-type {
-  border: 0;
 }
 
 .logo {
@@ -276,22 +259,21 @@ nav a:first-of-type {
 
 .navbar {
   text-align: left;
-  /* width: 70px; */
 }
-
 .sidebar {
   position: flex;
   margin-top: 50px;
   margin-right: 10px;
-  width: 14vw;
+  width: 25%;
   /* box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12)); */
 }
-.v-field_overlay{
-  background-color: white;
+.resultsnumber{
+  margin: 1rem;
 }
+
 .cards{
   min-height: 300px;
-  width: 50vw;
+  width: 75%;
   /* min-width: 45rem; */
   /* width: 700px; */
   /* --v-layout-left: 0 !important; */
@@ -301,12 +283,14 @@ nav a:first-of-type {
   justify-content: center;
   align-items: center;
   height: 100%;
+  
 }
 .card{
   margin-bottom: 20px;
   /* border: 2px solid #ccc; */
   box-shadow: none;
   box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
+  color: #3b417c;
 }
 .cardtitle{
   border-radius: 16px 16px 0px 0px;
@@ -322,25 +306,4 @@ display: flex;
 .results {
   padding-left: 15px;
 }
-
-/* .search {
-
-}
- */
-
-/* Warum Responsive mit min größe statt max Größe ??? */
-/* @media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-  }
-
-  nav {
-    text-align: left;
-    font-size: 1rem;
-    padding: 1rem 0;
-    
-  }
-
-} */
 </style>
