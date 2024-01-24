@@ -16,7 +16,21 @@
     <!------------Sidebar------------>
     <v-navigation-drawer class="sidebarcomponent">
       <div class="sidebar">
-        <v-card>
+        <v-card class="card">
+          <v-list>
+            <v-list-item title="Abschlussart" class="cardtitle"></v-list-item>
+          </v-list>
+          <!--Filter Checkobx zur Sortierung-->
+          <FilterCheckbox @istDualesStudiumChanged="istDualesStudiumChange"></FilterCheckbox>
+        </v-card>
+        <v-card class="card">
+          <v-list>
+            <v-list-item title="Abschlussart"></v-list-item>
+          </v-list>
+          <!--Filter Checkobx zur Sortierung-->
+          <FilterCheckbox @istDualesStudiumChanged="istDualesStudiumChange"></FilterCheckbox>
+        </v-card>
+        <v-card class="card">
           <v-list>
             <v-list-item title="Abschlussart"></v-list-item>
           </v-list>
@@ -25,6 +39,8 @@
         </v-card>
       </div>
     </v-navigation-drawer>
+
+    
 
     <!------------Main (Ergebnisse)------------>
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
@@ -206,16 +222,29 @@ nav a:first-of-type {
 }
 
 .sidebar {
-  position: relative;
-  top: 40px;
+  position: flex;
+  margin-top: 50px;
   margin-left: 10px;
   margin-right: 10px;
 }
 
-/* cant be edited easily beacause inline?! have to force with important */
-/* .sidebarcomponent{
-  top: 100px !important;
-} */
+.card{
+  margin-bottom: 20px;
+  /* border: 2px solid #ccc; */
+
+  /* border-radius: 20px; */
+  box-shadow: none;
+  /* box-shadow: 0px 0px 0px 1px inset; */
+}
+.cardtitle{
+  border-radius: 16px 16px 0px 0px;
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.3)inset;
+
+}
+.sidebarcomponent{
+margin-left: 400px;
+border: none;
+}
 
 .results {
   padding-left: 15px;
