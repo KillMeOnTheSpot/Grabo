@@ -3,7 +3,7 @@
     <!------------Navbar------------>
     <v-app-bar class="navbar">
       <img src="./assets/logo.png" class="logo">
-      <SearchBar @searchData="handleSearch" class="searchbar"></SearchBar>
+      <SearchBar @searchData="handleSearch" :stopLoading="finishedLoading" class="searchbar"></SearchBar>
     </v-app-bar>
     <!------------Sidebar------------>
     <div class="bodycomponents">
@@ -25,6 +25,7 @@
           <p>No results found, sorry</p>
         </div>
         <div v-else-if="filteredResponseData=='loading'">
+          <v-icon icon="fa:fas fa-circle-notch fa-spin"></v-icon>
           <p>loading...</p>
         </div>
         <div v-else-if="filteredResponseData">
@@ -41,6 +42,7 @@
         </div>
         <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
         <div v-else class="pcontainer">
+          <v-icon start icon="mdi-information" color="primary"></v-icon>
           <p>press search to display results!</p>
         </div>
       </v-main>
@@ -71,13 +73,13 @@ export default {
       filteredResponseData: null,
       finishedLoading: true,
 
-      upperCallLimit: 50,
+      upperCallLimit: 51,
 
       clientId: '5aee2cfe-1709-48a9-951d-eb48f8f73a74', //client id for the API
 
       index: 1,
-      placeholderImage: placeholderImage,
 
+      placeholderImage: placeholderImage,
 
       checkboxes: [
         { id: 1, label: 'Duales Studium', location: "item.studienangebot.studienmodelle.some(model => model.id === 5)", value: true },
@@ -169,8 +171,8 @@ export default {
       }
       this.filterAndDisplayData();
     },
-    handleLoadMoreButton(){
-      this.upperCallLimit +=100
+    handleLoadingFinished(){
+
     },
     filterAndDisplayData() {
       this.filteredResponseData=='loading'
@@ -214,6 +216,7 @@ export default {
   font-family: "neue-haas-grotesk-display", sans-serif;
   font-weight: 700;
   font-style: normal;
+  color: #3b417c;
 }
 
 header {
@@ -275,12 +278,14 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
+  
 }
 .card{
   margin-bottom: 20px;
   /* border: 2px solid #ccc; */
   box-shadow: none;
   box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
+  color: #3b417c;
 }
 .cardtitle{
   border-radius: 16px 16px 0px 0px;
