@@ -1,7 +1,7 @@
 <template>
   <v-layout class="content" >
     <!------------Navbar------------>
-    <v-app-bar class="navbar">
+    <v-app-bar>
       <img src="./assets/logo.png" class="logo">
       <SearchBar @searchData="handleSearch" :stopLoading="finishedLoading"></SearchBar>
     </v-app-bar>
@@ -9,7 +9,7 @@
     <div class="bodycomponents">
       <v-container class="sidebar">
         <Multiselect @item-selected="handleItemSelect"></Multiselect>
-        <v-card class="sidebarcard">
+        <v-card>
           <!--Filter Checkboxen zur Sortierung-->
           <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
             :checkboxLabel="checkbox.label" :dataLocation="checkbox.location" :dataValue="checkbox.value"
@@ -220,16 +220,13 @@ export default {
   font-style: normal;
   color: #3b417c;
 }
-header {
-  height: 10rem;
-  justify-content: center;
-}
 .content{
   display: flex;
   justify-content: center;
 }
-.navbar {
-  text-align: left;
+header {
+  height: 10rem;
+  justify-content: center;
 }
 .logo {
   margin-left: 1rem;
@@ -248,39 +245,6 @@ header {
   margin-right: 10px;
   width: 25%;
 }
-.resultsnumber{
-  margin: 1rem;
-}
-.welcometext{
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 100%;
-}
-
-.welcome{
-  font-size: 80px;
-  font-weight: 600;
-  color: #23274b;
-}
-
-.description{
-  font-size: 24px;
-  color: #525782;
-  font-weight: 300;
-}
-
-.descr_bold{
-  font-weight: 700;
-  color: #23274b;
-}
-
-.card{
-  margin-bottom: 20px;
-  box-shadow: none;
-  box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
-  color: #3b417c;
-}
 .studicards{
   min-height: 300px;
   width: 75%;
@@ -292,9 +256,24 @@ header {
   margin: 1rem;
 }
 .welcometext{
-  /* display: flex; */
+  display: flex;
   justify-content: center;
   align-items: flex-start;
   height: 100%;
+  flex-direction: column;
+}
+.welcome{
+  font-size: 80px;
+  font-weight: 600;
+  color: #23274b;
+}
+.description{
+  font-size: 24px;
+  color: #525782;
+  font-weight: 300;
+}
+.descr_bold{
+  font-weight: 700;
+  color: #23274b;
 }
 </style>
