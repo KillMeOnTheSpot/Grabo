@@ -201,7 +201,7 @@ body {
   margin-top: 5rem;
 }
 
-nav {
+/* nav {
   width: 100%;
   font-size: 12px;
   text-align: left;
@@ -216,17 +216,28 @@ nav a {
 
 nav a:first-of-type {
   border: 0;
-}
+} */
+
 .logo {
   margin-left: 1rem;
   margin-right: 10rem;
   font-size: 24px;
 }
 
-.navbar {
+/* .navbar {
   text-align: left;
-  /* width: 70px; */
+  width: 70px;
+} */
+
+/* .searchbars {
+  display: flex;
+  width: 700px;
 }
+
+.searchfield {
+  margin-top: 1.5rem;
+  margin-right: 1rem;
+} */
 .sidebar {
   margin-top: 2rem;
 }
