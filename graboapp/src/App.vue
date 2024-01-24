@@ -2,9 +2,8 @@
   <v-layout class="rounded rounded-md, content">
     <!------------Navbar------------>
     <v-app-bar class="navbar">
-      <div class="logo">Step Metal</div>
-      
-      <SearchBar @searchData="handleSearch"></SearchBar>
+      <img src="./assets/logo.png" class="logo">
+      <SearchBar @searchData="handleSearch" class="searchbar"></SearchBar>
     </v-app-bar>
     <!------------Sidebar------------>
     <div class="bodycomponents">
@@ -250,8 +249,12 @@ nav a:first-of-type {
 
 .logo {
   margin-left: 1rem;
-  margin-right: 10rem;
-  font-size: 24px;
+  margin-right: 1.5rem;
+  width: 20rem;
+}
+
+.searchbar{
+  margin-top: 5rem;
 }
 
 .navbar {
@@ -259,15 +262,6 @@ nav a:first-of-type {
   /* width: 70px; */
 }
 
-.searchbars {
-  display: flex;
-  width: 700px;
-}
-
-.searchfield {
-  margin-top: 1.5rem;
-  margin-right: 1rem;
-}
 .sidebar {
   position: flex;
   margin-top: 50px;

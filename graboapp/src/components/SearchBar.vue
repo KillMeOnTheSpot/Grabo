@@ -27,7 +27,8 @@ export default {
 
 <!-----------CSS----------->  
 <style scoped>
-.inactive {
+/* .inactive {
     background-color: brown;
-}
+} */
+
 </style>
