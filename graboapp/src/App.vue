@@ -24,7 +24,10 @@
 
       <!------------Main (Ergebnisse)------------>
       <v-main class="cards">
-        <div v-if="filteredResponseData">
+        <div v-if="filteredResponseData=='error'">
+          <p>error loading entries, please make sure you have a stable internet connection</p>
+        </div>
+        <div v-else-if="filteredResponseData">
           <h2 class="results">Such Ergebnisse:</h2>
           <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
           <StudInfoCard v-for="(stud, index) in filteredResponseData" :key="index" :studInfo="{
@@ -37,7 +40,7 @@
         </div>
         <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
         <div v-else>
-          <p>no results yet</p>
+          <p>press search to display results!</p>
         </div>
       </v-main>
     </div>
@@ -85,7 +88,6 @@ export default {
     //fetches data, when the search button is pressed
     fetchData(inputValueName) {
       // Axios GET request, url durchsucht anhand des input feldes
-
       let apiUrl = `https://rest.arbeitsagentur.de/infosysbub/studisu/pc/v1/studienangebote?sw=${inputValueName}&pg=${this.index}`;
       axios
         .get(apiUrl, {
@@ -98,14 +100,16 @@ export default {
           this.responseData.items = this.responseData.items.concat(response.data.items);
 
           if (response.data.items.length > 0) {
-            console.log("is invalid, index is: " + this.index);
+            console.log("is valid, index is: " + this.index);
             this.index++;
             this.fetchData(inputValueName);
+            this.filterAndDisplayData();
           }
-          this.filterAndDisplayData();
         })
         .catch((error) => {
           // Handle error
+          this.filteredResponseData = 'error';
+          console.error(this.filteredResponseData);
           console.error("Error fetching data:", error);
         });
       // }
