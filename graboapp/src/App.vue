@@ -214,6 +214,7 @@ export default {
   font-family: "neue-haas-grotesk-display", sans-serif;
   font-weight: 700;
   font-style: normal;
+  color: #3b417c;
 }
 
 header {
@@ -280,6 +281,7 @@ nav a:first-of-type {
 .cards{
   min-height: 300px;
   width: 50vw;
+  
   /* min-width: 45rem; */
   /* width: 700px; */
   /* --v-layout-left: 0 !important; */
@@ -289,12 +291,14 @@ nav a:first-of-type {
   justify-content: center;
   align-items: center;
   height: 100%;
+  
 }
 .card{
   margin-bottom: 20px;
   /* border: 2px solid #ccc; */
   box-shadow: none;
   box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
+  color: #3b417c;
 }
 .cardtitle{
   border-radius: 16px 16px 0px 0px;

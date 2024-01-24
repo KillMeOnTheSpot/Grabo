@@ -30,5 +30,12 @@ export default {
 /* .inactive {
     background-color: brown;
 } */
+.searchfield{
+    padding-top: 1.5rem;
+}
+#searchButton{
+    margin-left: 1.5rem;
+    margin-right: 13rem;
+}
 
 </style>

@@ -42,6 +42,7 @@
     padding: 1rem 1rem 1rem 1rem;
     width: 100%;
     float: right;
+    color: #3a3e64;
 }
 .subtitle{
     padding: 0;
