@@ -26,9 +26,5 @@
 
 <!----------CSS---------->  
 <style scoped>
-    /* .card{
-        box-shadow: 0px 2px 1px -1px, rgba(0, 0, 0, 0.2)
-        
-    } */
-    
+ 
 </style>
