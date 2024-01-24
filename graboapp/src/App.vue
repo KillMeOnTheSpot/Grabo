@@ -9,16 +9,13 @@
 
     <!------------Sidebar------------>
     <div class="bodycomponents">
-      <v-container>
-        <div class="sidebar">
+      <v-container class="sidebar">
           <v-card class="card">
-
             <!--Filter Checkobxen zur Sortierung-->
             <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
               :checkboxLabel="checkbox.label" :dataLocation="checkbox.location" :dataValue="checkbox.value"
               @checkboxChanged="handleCheckboxChanged" />
           </v-card>
-        </div>
     </v-container>
       
 
@@ -205,9 +202,10 @@ body {
 .bodycomponents{
   display: flex;
   margin: auto;
+  margin-top: 5rem;
 }
 
-nav {
+/* nav {
   width: 100%;
   font-size: 12px;
   text-align: left;
@@ -222,7 +220,7 @@ nav a {
 
 nav a:first-of-type {
   border: 0;
-}
+} */
 
 .logo {
   margin-left: 1rem;
@@ -230,12 +228,12 @@ nav a:first-of-type {
   font-size: 24px;
 }
 
-.navbar {
+/* .navbar {
   text-align: left;
-  /* width: 70px; */
-}
+  width: 70px;
+} */
 
-.searchbars {
+/* .searchbars {
   display: flex;
   width: 700px;
 }
@@ -243,23 +241,19 @@ nav a:first-of-type {
 .searchfield {
   margin-top: 1.5rem;
   margin-right: 1rem;
-}
+} */
 .sidebar {
-  position: flex;
-  margin-top: 50px;
-  /* margin-left: 10px; */
-  margin-right: 10px;
-  
+  margin-top: 2rem;
 }
 .cards{
   min-height: 300px;
   max-width: 70%;
-  --v-layout-left: 0 !important;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
 }
 .card{
   margin-bottom: 20px;
   /* border: 2px solid #ccc; */
-  box-shadow: none;
+  /* box-shadow: none; */
 }
 .cardtitle{
   border-radius: 16px 16px 0px 0px;

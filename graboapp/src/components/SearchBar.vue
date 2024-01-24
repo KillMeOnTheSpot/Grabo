@@ -1,8 +1,5 @@
 <template>
-    <div class="searchbars">
-        <v-text-field v-model="inputValueName" clearable label="Studiengang oder Uniname" variant="solo" class="searchfield"
-            placeholder="z.B. Medizin"></v-text-field>
-    </div>
+    <v-text-field v-model="inputValueName" clearable label="nach Studiengang suchen" variant="solo" class="searchfield" placeholder="z.B. Medizin"></v-text-field>
     <v-btn @click="searchData">Suchen</v-btn>
 </template>
  
@@ -30,13 +27,4 @@ export default {
 
 <!-----------CSS----------->  
 <style scoped>
-.searchbars {
-    display: flex;
-    width: 700px;
-}
-
-.searchfield {
-    margin-top: 1.5rem;
-    margin-right: 1rem;
-}
 </style>
