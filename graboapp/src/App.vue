@@ -2,9 +2,8 @@
   <v-layout class="rounded rounded-md, content">
     <!------------Navbar------------>
     <v-app-bar class="navbar">
-      <div class="logo">Step Metal</div>
-      
-      <SearchBar @searchData="handleSearch" class="searchfield"></SearchBar>
+      <img src="./assets/logo.png" class="logo">
+      <SearchBar @searchData="handleSearch" class="searchbar"></SearchBar>
     </v-app-bar>
     <!------------Sidebar------------>
     <div class="bodycomponents">
@@ -30,7 +29,7 @@
         </div>
         <div v-else-if="filteredResponseData">
           <h2 class="results">Such Ergebnisse:</h2>
-          <p>{{this.index * 20}} Ergebnisse gefunden, {{ finishedLoading }}</p>
+          <p>{{this.filteredResponseData.length}} Ergebnisse gefunden</p>
           <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
           <StudInfoCard v-for="(stud, index) in filteredResponseData" :key="index" :studInfo="{
             name: stud.name,
@@ -115,7 +114,9 @@ export default {
             this.filterAndDisplayData();
           }
           else if(this.responseData.items.length == 0){
+            this.finishedLoading = true;
             this.filteredResponseData = 'not found';
+            document.querySelector("#searchButton").classList.remove("inactive");
           }
           else{
             this.finishedLoading = true;
@@ -126,10 +127,11 @@ export default {
         .catch((error) => {
           // Handle error
           this.filteredResponseData = 'error';
+          this.finishedLoading = true;
+          document.querySelector("#searchButton").classList.remove("inactive");
           console.error(this.filteredResponseData);
           console.error("Error fetching data:", error);
         });
-      // }
     },
     handleSearch(inputValueName) {
       if (inputValueName.length != 0 && this.finishedLoading) {
@@ -140,15 +142,17 @@ export default {
         this.fetchData(inputValueName);
       }
     },
-    handleItemSelect(selectedId) {
-      console.log(selectedId);
+    handleItemSelect(selectedIds) {
+      console.log(selectedIds);
       let id = 0;
       let found = this.filters.some(filter => filter.id === id);
       if (found) {
         console.log("success");
         this.filters = this.filters.filter(filter => filter.id !== id);
       }
-      this.filters.push({ id: id, location: "item.studienangebot.region.Key", value: selectedId });
+      if(selectedIds.length > 0){
+        this.filters.push({ id: id, location: "filter.selectedIds.some(selectedId => selectedId.includes(item.studienangebot.region.Key))", value: true, selectedIds: selectedIds});
+      }
       this.filterAndDisplayData();
     },
     handleCheckboxChanged(checkboxData) {
@@ -164,6 +168,9 @@ export default {
         this.filters.push({ id: checkboxData.id, location: checkboxData.location, value: checkboxData.value });
       }
       this.filterAndDisplayData();
+    },
+    handleLoadMoreButton(){
+      this.upperCallLimit +=100
     },
     filterAndDisplayData() {
       this.filteredResponseData=='loading'
@@ -252,8 +259,12 @@ nav a:first-of-type {
 
 .logo {
   margin-left: 1rem;
-  margin-right: 10rem;
-  font-size: 24px;
+  margin-right: 1.5rem;
+  width: 20rem;
+}
+
+.searchbar{
+  margin-top: 5rem;
 }
 
 .navbar {
@@ -261,15 +272,6 @@ nav a:first-of-type {
   /* width: 70px; */
 }
 
-/* .searchbars {
-  display: flex;
-  width: 700px;
-} */
-.searchfield {
-  margin-top: 1.5rem;
-  margin-right: 1rem;
-  padding-top: 10rem !important;
-}
 .sidebar {
   position: flex;
   margin-top: 50px;

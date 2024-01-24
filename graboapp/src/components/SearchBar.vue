@@ -13,7 +13,7 @@ export default {
     },
     data() {
         return {
-           inputValueName: '', 
+           inputValueName: ''
         };
     },
     methods: {
@@ -27,7 +27,8 @@ export default {
 
 <!-----------CSS----------->  
 <style scoped>
-.inactive {
+/* .inactive {
     background-color: brown;
-}
+} */
+
 </style>
