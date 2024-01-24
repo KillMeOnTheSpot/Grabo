@@ -42,8 +42,10 @@
         </div>
         <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
         <div v-else class="pcontainer">
-          <v-icon start icon="mdi-information" color="primary"></v-icon>
-          <p>press search to display results!</p>
+<!--           <v-icon start icon="mdi-information" color="primary"></v-icon> -->
+          <h1 class="welcome">Willkommen!</h1>
+          <p class="description"><span class="descr_bold">StudiScout®</span> hilft dir dabei, das <span class="descr_bold">Traum-Studium</span> in deiner Nähe zu finden!<br><br>
+          Suche einfach nach einem <span class="descr_bold">Studiengang</span> ,der dich interressiert und passe die <span class="descr_bold">Parameter</span> für dich an!</p>
         </div>
       </v-main>
     </div>
@@ -285,6 +287,24 @@ body {
   height: 100%;
   
 }
+
+.welcome{
+  font-size: 80px;
+  font-weight: 600;
+  color: #23274b;
+}
+
+.description{
+  font-size: 24px;
+  color: #525782;
+  font-weight: 300;
+}
+
+.descr_bold{
+  font-weight: 700;
+  color: #23274b;
+}
+
 .card{
   margin-bottom: 20px;
   /* border: 2px solid #ccc; */
