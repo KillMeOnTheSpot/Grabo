@@ -44,9 +44,6 @@
         <div v-else>
           <p>press search to display results!</p>
         </div>
-        <div v-if="limitReached">
-          <v-btn @click="handleLoadMoreButton">Load More</v-btn>
-        </div>
       </v-main>
     </div>
   </v-layout>
@@ -118,7 +115,9 @@ export default {
             this.filterAndDisplayData();
           }
           else if(this.responseData.items.length == 0){
+            this.finishedLoading = true;
             this.filteredResponseData = 'not found';
+            document.querySelector("#searchButton").classList.remove("inactive");
           }
           else{
             this.finishedLoading = true;
@@ -129,10 +128,11 @@ export default {
         .catch((error) => {
           // Handle error
           this.filteredResponseData = 'error';
+          this.finishedLoading = true;
+          document.querySelector("#searchButton").classList.remove("inactive");
           console.error(this.filteredResponseData);
           console.error("Error fetching data:", error);
         });
-      // }
     },
     handleSearch(inputValueName) {
       if (inputValueName.length != 0 && this.finishedLoading) {
@@ -143,15 +143,17 @@ export default {
         this.fetchData(inputValueName);
       }
     },
-    handleItemSelect(selectedId) {
-      console.log(selectedId);
+    handleItemSelect(selectedIds) {
+      console.log(selectedIds);
       let id = 0;
       let found = this.filters.some(filter => filter.id === id);
       if (found) {
         console.log("success");
         this.filters = this.filters.filter(filter => filter.id !== id);
       }
-      this.filters.push({ id: id, location: "item.studienangebot.region.Key", value: selectedId });
+      if(selectedIds.length > 0){
+        this.filters.push({ id: id, location: "filter.selectedIds.some(selectedId => selectedId.includes(item.studienangebot.region.Key))", value: true, selectedIds: selectedIds});
+      }
       this.filterAndDisplayData();
     },
     handleCheckboxChanged(checkboxData) {
