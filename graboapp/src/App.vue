@@ -4,13 +4,8 @@
     <!------------Navbar------------>
     <v-app-bar class="navbar">
       <div class="logo">Step Metal</div>
-      <div class="searchbars">
-        <v-text-field v-model="inputValue" clearable label="Studiengang oder Uniname" variant="solo" class="searchfield"
-          placeholder="z.B. Medizin"></v-text-field>
-        <v-text-field v-model="inputValue" clearable label="Ort oder 5-stellige PLZ" variant="solo" class="searchfield"
-          placeholder="z.B. Tübingen"></v-text-field>
-      </div>
-      <v-btn @click="fetchData">Suchen</v-btn>
+      <Multiselect @item-selected="handleItemSelect"></Multiselect>
+      <SearchBar @searchData="handleSearch"></SearchBar>
     </v-app-bar>
 
     <!------------Sidebar------------>
@@ -34,8 +29,10 @@
           <v-list>
             <v-list-item title="Abschlussart"></v-list-item>
           </v-list>
-          <!--Filter Checkobx zur Sortierung-->
-          <FilterCheckbox @istDualesStudiumChanged="istDualesStudiumChange"></FilterCheckbox>
+          <!--Filter Checkobxen zur Sortierung-->
+          <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
+            :checkboxLabel="checkbox.label" :dataLocation="checkbox.location" :dataValue="checkbox.value"
+            @checkboxChanged="handleCheckboxChanged" />
         </v-card>
       </div>
     </v-navigation-drawer>
@@ -70,10 +67,11 @@
 //imports
 import axios from 'axios';
 import StudInfoCard from './components/StudInfoCard.vue';
-import FilterCheckbox from './components/FilterCheckbox.vue';
+import DynamicFilterCheckbox from './components/DynamicFilterCheckbox.vue';
+import SearchBar from './components/SearchBar.vue';
+import Multiselect from './components/Multiselect.vue'
 
-//variables
-const clientId = '5aee2cfe-1709-48a9-951d-eb48f8f73a74';
+import placeholderImage from './assets/notFound.png';
 
 //exported to main
 export default {
@@ -81,89 +79,117 @@ export default {
   data() {
     return {
       inputValue: '',
-      istDualesStudium: '',
-      responseData: null, // to store the response data
+      responseData: { items: [] },
+      filters: [],
       filteredResponseData: null,
+
+      clientId: '5aee2cfe-1709-48a9-951d-eb48f8f73a74', //client id for the API
+
+      index: 1,
+      placeholderImage: placeholderImage,
+
+
+      checkboxes: [
+        { id: 1, label: 'Duales Studium', location: "item.studienangebot.studienmodelle.some(model => model.id === 5)", value: true },
+        { id: 2, label: 'Checkbox 2', location: "item.studienangebot.id", value: "73209814" },
+        { id: 3, label: 'TH', location: "item.studienangebot.region.Key", value: "TH" },
+        // Add more checkboxes as needed
+      ],
     };
   },
   //methods
   methods: {
     //fetches data, when the search button is pressed
-    fetchData() {
+    fetchData(inputValueName) {
       // Axios GET request, url durchsucht anhand des input feldes
-      const apiUrl = `https://rest.arbeitsagentur.de/infosysbub/studisu/pc/v1/studienangebote?sw=${this.inputValue}`;
+
+      let apiUrl = `https://rest.arbeitsagentur.de/infosysbub/studisu/pc/v1/studienangebote?sw=${inputValueName}&pg=${this.index}`;
       axios
         .get(apiUrl, {
           headers: {
-            'X-API-Key': clientId //API Key 
+            'X-API-Key': this.clientId //API Key 
           }
         })
         .then((response) => {
           // Handle successful response
-          console.log(response.data);
-          this.responseData = response.data;
-          //mapt die Daten, sodass später nur bestimmte Daten angezeigt werden
-          const filteredData = response.data.items.map(item => ({
-            name: item.studienangebot.studiBezeichnung,
-            nameUni: item.studienangebot.studienanbieter.name,
-            studInhalt: item.studienangebot.studiInhalt,
-            logoURL: item.studienangebot.studienanbieter.logo.externalURL
-          }));
+          this.responseData.items = this.responseData.items.concat(response.data.items);
 
-          //legt die Daten in filteredData ab, die Original Abfrage ist noch in responseData gespeichert 
-          this.filteredResponseData = filteredData;
-
-          //console log hier später löschen, manchmal praktisch um die json anzuschauen
-          console.log(filteredData);
-          console.log(this.filteredResponseData);
-
+          if (response.data.items.length > 0) {
+            console.log("is invalid, index is: " + this.index);
+            this.index++;
+            this.fetchData(inputValueName);
+          }
+          this.filterAndDisplayData();
         })
         .catch((error) => {
           // Handle error
           console.error("Error fetching data:", error);
         });
+      // }
     },
-    handleSelectionChange(selectedValues) {
-
+    handleSearch(inputValueName){
+      this.index = 1;
+      this.responseData = { items: [] };
+      this.fetchData(inputValueName);
     },
-    //filtert die Daten, wenn die "Duales Studium" Checkbox ausgewählt ist
-    istDualesStudiumChange(selectedValues) {
+    handleItemSelect(selectedId) {
+      console.log(selectedId);
+      let id = 0;
+      let found = this.filters.some(filter => filter.id === id);
+      if (found) {
+        console.log("success");
+        this.filters = this.filters.filter(filter => filter.id !== id);
+      }
+      this.filters.push({ id: id, location: "item.studienangebot.region.Key", value: selectedId });
+      this.filterAndDisplayData();
+    },
+    handleCheckboxChanged(checkboxData) {
+      console.log("Checkbox was changed");
 
-      console.log("repsonseData:", this.responseData);
-      console.log("value?:", parseInt(selectedValues[1]));
+      //sucht, ob es schon einen Filter mit der selben ID gibt. Falls ja wird dieser entferntm falls nicht,m wird er als neuer FIlter hinzugefügt
+      let found = this.filters.some(filter => filter.id === checkboxData.id);
+      if (found) {
+        console.log("success");
+        this.filters = this.filters.filter(filter => filter.id !== checkboxData.id);
+      }
+      else {
+        this.filters.push({ id: checkboxData.id, location: checkboxData.location, value: checkboxData.value });
+      }
+      this.filterAndDisplayData();
+    },
+    filterAndDisplayData() {
+      //checks, if there is data to be displayed
+      if (this.responseData) {
+        let filteredData = this.responseData;
 
-      // if Abfrage, checkt vereinfacht gesagt, ob die Checkbox selected oder nicht selected ist
-      if (!isNaN(parseInt(selectedValues[1]))) {
-        const filteredData = this.responseData.items
-          //filter for Duales Studium (Duales Studium hat die ID 5). Parse Int wandelt selectedValues von "5" zu 5 
-          .filter(item => item.studienangebot.studienmodelle.some(model => model.id === parseInt(selectedValues[1])))
-          .map(item => ({
-            name: item.studienangebot.studiBezeichnung,
-            nameUni: item.studienangebot.studienanbieter.name,
-            studInhalt: item.studienangebot.studiInhalt,
-            logoURL: item.studienangebot.studienanbieter.logo.externalURL
-          }));
+        console.log(this.responseData);
+
+        filteredData = filteredData.items.map(item => item);
+
+        if (this.filters.length > 0) {
+          this.filters.forEach(filter => {
+            filteredData = filteredData.filter(item => eval(filter.location) === filter.value)
+          });
+        }
+
+        console.log(filteredData);
+        console.log(this.filters.length);
+
+        filteredData = filteredData.map(item => ({
+          name: item.studienangebot.studiBezeichnung,
+          nameUni: item.studienangebot.studienanbieter.name,
+          studInhalt: item.studienangebot.studiInhalt,
+          // from ChatGPT: Use optional chaining and nullish coalescing in case no logo is there
+          logoURL: item.studienangebot.studienanbieter.logo?.externalURL ?? this.placeholderImage
+        }));
 
         this.filteredResponseData = filteredData;
-        console.log("filtered repsonseData:", this.filteredResponseData);
       }
-      //else lädt die Daten normal, wenn die Checkbox deselected wird
-      else{
-        const filteredData = this.responseData.items
-          .map(item => ({
-            name: item.studienangebot.studiBezeichnung,
-            nameUni: item.studienangebot.studienanbieter.name,
-            studInhalt: item.studienangebot.studiInhalt,
-            logoURL: item.studienangebot.studienanbieter.logo.externalURL
-          }));
 
-        this.filteredResponseData = filteredData;
-        console.log("filtered repsonseData:", this.filteredResponseData);
-      }
     }
   },
   //components
-  components: { StudInfoCard, FilterCheckbox }
+  components: { StudInfoCard, DynamicFilterCheckbox, SearchBar, Multiselect }
 };
 </script>
 
