@@ -39,8 +39,7 @@
     display: flex;
 }
 .studicard{
-    padding-left: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem 1rem 1rem 1rem;
     width: 100%;
     float: right;
 }
