@@ -14,7 +14,9 @@
             </div>
         </v-card>
     </v-container>
+    <p v-text="studInfo.studInhalt"></p>
 </template>
+
  
 <!----------Script----------->
 <script>
