@@ -3,25 +3,20 @@
     <!------------Navbar------------>
     <v-app-bar class="navbar">
       <div class="logo">Step Metal</div>
-      <Multiselect @item-selected="handleItemSelect"></Multiselect>
+      
       <SearchBar @searchData="handleSearch"></SearchBar>
     </v-app-bar>
-
     <!------------Sidebar------------>
     <div class="bodycomponents">
-      <v-container>
-        <div class="sidebar">
-          <v-card class="card">
-
-            <!--Filter Checkobxen zur Sortierung-->
-            <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
-              :checkboxLabel="checkbox.label" :dataLocation="checkbox.location" :dataValue="checkbox.value"
-              @checkboxChanged="handleCheckboxChanged" />
-          </v-card>
-        </div>
+      <v-container class="sidebar">
+        <Multiselect @item-selected="handleItemSelect"></Multiselect>
+        <v-card class="card">
+          <!--Filter Checkobxen zur Sortierung-->
+          <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
+            :checkboxLabel="checkbox.label" :dataLocation="checkbox.location" :dataValue="checkbox.value"
+            @checkboxChanged="handleCheckboxChanged" />
+        </v-card>
     </v-container>
-      
-
       <!------------Main (Ergebnisse)------------>
       <v-main class="cards">
         <div v-if="filteredResponseData=='error'">
