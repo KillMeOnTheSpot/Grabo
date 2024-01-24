@@ -5,7 +5,7 @@
     <v-app-bar class="navbar">
       <div class="logo">Step Metal</div>
       <Multiselect @item-selected="handleItemSelect"></Multiselect>
-      <SearchBar @searchData="handleSearch"></SearchBar>
+      <SearchBar @searchData="handleSearch" style="border-radius: 50px;"></SearchBar>
     </v-app-bar>
 
     <!------------Sidebar------------>
@@ -197,19 +197,15 @@ export default {
 <!------------------------CSS---------------------------->
 <style scoped>
 header {
-  /* line-height: 1.5; */
-  /* max-height: 150vh; */
-  height: 5rem;
+  height: 10rem;
   justify-content: center;
-
-
 }
 
 body {
   background: var(--color-);
 }
 
-nav {
+/* nav {
   width: 100%;
   font-size: 12px;
   text-align: left;
@@ -220,11 +216,11 @@ nav a {
   padding: 0 1rem;
   border-left: 1px solid var(--color-border);
   text-align: right;
-}
+} */
 
-nav a:first-of-type {
+/* nav a:first-of-type {
   border: 0;
-}
+} */
 
 .logo {
   margin-left: 1rem;
@@ -232,20 +228,11 @@ nav a:first-of-type {
   font-size: 24px;
 }
 
-.navbar {
+/* .navbar {
   text-align: left;
-  /* width: 70px; */
-}
+  width: 70px; 
+}*/
 
-.searchbars {
-  display: flex;
-  width: 700px;
-}
-
-.searchfield {
-  margin-top: 1.5rem;
-  margin-right: 1rem;
-}
 
 .sidebar {
   position: flex;

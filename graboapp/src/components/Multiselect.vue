@@ -2,8 +2,9 @@
     <v-autocomplete
       v-model="selectedItem"
       :items="items"
-      label="Select Item"
+      label="Bundesland wählen"
       @update:modelValue="itemSelected"
+      style="border-radius: 50px;"
     ></v-autocomplete>
   </template>
   
@@ -42,4 +43,9 @@
     },
   };
   </script>
+
+<!-----------CSS----------->  
+<style scoped>
+
+</style>  
   
