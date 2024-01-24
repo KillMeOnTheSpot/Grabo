@@ -36,7 +36,8 @@
             name: stud.name,
             nameUni: stud.nameUni,
             studInhalt: stud.studInhalt,
-            logoURL: stud.logoURL
+            logoURL: stud.logoURL,
+            abschlussGrad: stud.abschlussGrad,
           }">
           </StudInfoCard>
         </div>
@@ -113,16 +114,15 @@ export default {
             console.log("is valid, index is: " + this.index);
             this.index++;
             this.fetchData(inputValueName);
+            //recursive function call
             this.filterAndDisplayData();
           }
           else if(this.responseData.items.length == 0){
             this.finishedLoading = true;
             this.filteredResponseData = 'not found';
-            document.querySelector("#searchButton").classList.remove("inactive");
           }
           else{
             this.finishedLoading = true;
-            document.querySelector("#searchButton").classList.remove("inactive");
           }
           
         })
@@ -130,7 +130,6 @@ export default {
           // Handle error
           this.filteredResponseData = 'error';
           this.finishedLoading = true;
-          document.querySelector("#searchButton").classList.remove("inactive");
           console.error(this.filteredResponseData);
           console.error("Error fetching data:", error);
         });
@@ -139,14 +138,9 @@ export default {
       if (inputValueName.length != 0 && this.finishedLoading) {
         console.log("2")
         this.finishedLoading = false;
-        document.querySelector("#searchButton").classList.add("inactive");
         this.index = 1;
         this.responseData = { items: [] };
         this.fetchData(inputValueName);
-      }
-      else{
-        console.log("1")
-        this.finishedLoading = false;
       }
     },
     handleItemSelect(selectedIds) {
@@ -176,9 +170,6 @@ export default {
       }
       this.filterAndDisplayData();
     },
-    handleLoadingFinished(){
-
-    },
     filterAndDisplayData() {
       this.filteredResponseData=='loading'
       //checks, if there is data to be displayed
@@ -202,6 +193,8 @@ export default {
           name: item.studienangebot.studiBezeichnung,
           nameUni: item.studienangebot.studienanbieter.name,
           studInhalt: item.studienangebot.studiInhalt,
+          abschlussGrad: item.studienangebot.abschlussgrad.label,
+
           // from ChatGPT: Use optional chaining and nullish coalescing in case no logo is there
           logoURL: item.studienangebot.studienanbieter.logo?.externalURL ?? this.placeholderImage
         }));
