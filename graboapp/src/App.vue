@@ -30,7 +30,7 @@
         </div>
         <div v-else-if="filteredResponseData">
           <h2 class="results">Such Ergebnisse:</h2>
-          <p>{{this.index * 20}} Ergebnisse gefunden, {{ finishedLoading }}</p>
+          <p>{{this.filteredResponseData.length}} Ergebnisse gefunden</p>
           <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
           <StudInfoCard v-for="(stud, index) in filteredResponseData" :key="index" :studInfo="{
             name: stud.name,
@@ -43,6 +43,9 @@
         <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
         <div v-else>
           <p>press search to display results!</p>
+        </div>
+        <div v-if="limitReached">
+          <v-btn @click="handleLoadMoreButton">Load More</v-btn>
         </div>
       </v-main>
     </div>
@@ -164,6 +167,9 @@ export default {
         this.filters.push({ id: checkboxData.id, location: checkboxData.location, value: checkboxData.value });
       }
       this.filterAndDisplayData();
+    },
+    handleLoadMoreButton(){
+      this.upperCallLimit +=100
     },
     filterAndDisplayData() {
       this.filteredResponseData=='loading'
