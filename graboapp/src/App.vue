@@ -203,7 +203,7 @@ body {
   margin: auto;
 }
 
-nav {
+/* nav {
   width: 100%;
   font-size: 12px;
   text-align: left;
@@ -218,7 +218,7 @@ nav a {
 
 nav a:first-of-type {
   border: 0;
-}
+} */
 
 .logo {
   margin-left: 1rem;
@@ -226,12 +226,12 @@ nav a:first-of-type {
   font-size: 24px;
 }
 
-.navbar {
+/* .navbar {
   text-align: left;
-  /* width: 70px; */
-}
+  width: 70px;
+} */
 
-.searchbars {
+/* .searchbars {
   display: flex;
   width: 700px;
 }
@@ -239,7 +239,7 @@ nav a:first-of-type {
 .searchfield {
   margin-top: 1.5rem;
   margin-right: 1rem;
-}
+} */
 .sidebar {
   position: flex;
   margin-top: 50px;

@@ -2,8 +2,9 @@
     <v-autocomplete
       v-model="selectedItem"
       :items="items"
-      label="Select Item"
+      label="Bundesland wählen"
       @update:modelValue="itemSelected"
+      variant="solo-filled"
     ></v-autocomplete>
   </template>
   
