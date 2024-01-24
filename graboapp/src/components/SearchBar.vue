@@ -1,6 +1,11 @@
 <template>
-    <v-text-field v-model="inputValueName" clearable label="nach Studiengang suchen" variant="solo" class="searchfield" placeholder="z.B. Medizin"></v-text-field>
-    <v-btn id="searchButton" @click="searchData">Suchen</v-btn>
+    <v-text-field v-model="inputValueName" clearable label="nach Studiengang suchen" variant="solo" class="searchfield"
+        placeholder="z.B. Medizin" icon="fa:fas fa-search"></v-text-field>
+    <v-btn color="primary" id="searchButton" @click="searchData" :loading="animationLoading" prepend-icon="fa:fas fa-search">
+        Suchen
+        <template v-slot:loader>
+            <v-progress-circular color="orange" indeterminate></v-progress-circular>
+        </template></v-btn>
 </template>
  
 <!------------Script------------>
@@ -9,19 +14,27 @@
 export default {
     name: 'SearchBar',
     emits: ['searchData'],
-    props: {
-    },
+    props: ['stopLoading'],
     data() {
         return {
-           inputValueName: ''
+            inputValueName: '',
+            animationLoading: false,
         };
     },
+
     methods: {
         //emitted ein Event an App.vue wenn die Checkbox sich verändert
         searchData() {
+            this.animationLoading = !this.animationLoading
+            console.log(this.animationLoading)
             this.$emit('searchData', this.inputValueName);
         }
-    }
+    },
+    watch: {
+        stopLoading(newValue) {
+            this.animationLoading = !newValue;
+        }
+    },
 }
 </script>
 

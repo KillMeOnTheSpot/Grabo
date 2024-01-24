@@ -4,7 +4,7 @@
     <v-app-bar class="navbar">
       <div class="logo">Step Metal</div>
       
-      <SearchBar @searchData="handleSearch"></SearchBar>
+      <SearchBar @searchData="handleSearch" :stopLoading="finishedLoading"></SearchBar>
     </v-app-bar>
     <!------------Sidebar------------>
     <div class="bodycomponents">
@@ -26,6 +26,7 @@
           <p>No results found, sorry</p>
         </div>
         <div v-else-if="filteredResponseData=='loading'">
+          <v-icon icon="fa:fas fa-circle-notch fa-spin"></v-icon>
           <p>loading...</p>
         </div>
         <div v-else-if="filteredResponseData">
@@ -42,6 +43,7 @@
         </div>
         <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
         <div v-else class="pcontainer">
+          <v-icon start icon="mdi-information" color="primary"></v-icon>
           <p>press search to display results!</p>
         </div>
       </v-main>
@@ -72,13 +74,13 @@ export default {
       filteredResponseData: null,
       finishedLoading: true,
 
-      upperCallLimit: 50,
+      upperCallLimit: 51,
 
       clientId: '5aee2cfe-1709-48a9-951d-eb48f8f73a74', //client id for the API
 
       index: 1,
-      placeholderImage: placeholderImage,
 
+      placeholderImage: placeholderImage,
 
       checkboxes: [
         { id: 1, label: 'Duales Studium', location: "item.studienangebot.studienmodelle.some(model => model.id === 5)", value: true },
@@ -170,8 +172,8 @@ export default {
       }
       this.filterAndDisplayData();
     },
-    handleLoadMoreButton(){
-      this.upperCallLimit +=100
+    handleLoadingFinished(){
+
     },
     filterAndDisplayData() {
       this.filteredResponseData=='loading'
