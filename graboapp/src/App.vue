@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="rounded rounded-md, content" >
+  <v-layout class="content" >
     <!------------Navbar------------>
     <v-app-bar class="navbar">
       <img src="./assets/logo.png" class="logo">
@@ -9,15 +9,15 @@
     <div class="bodycomponents">
       <v-container class="sidebar">
         <Multiselect @item-selected="handleItemSelect"></Multiselect>
-        <v-card class="card">
-          <!--Filter Checkobxen zur Sortierung-->
+        <v-card class="sidebarcard">
+          <!--Filter Checkboxen zur Sortierung-->
           <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
             :checkboxLabel="checkbox.label" :dataLocation="checkbox.location" :dataValue="checkbox.value"
             @checkboxChanged="handleCheckboxChanged" />
         </v-card>
     </v-container>
       <!------------Main (Ergebnisse)------------>
-      <v-main class="cards">
+      <v-main class="studicards">
         <div v-if="filteredResponseData=='error'">
           <p>error fetching data, no results found</p>
         </div>
@@ -41,7 +41,7 @@
           </StudInfoCard>
         </div>
         <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
-        <div v-else class="pcontainer">
+        <div v-else class="welcometext">
           <v-icon start icon="mdi-information" color="primary"></v-icon>
           <p>press search to display results!</p>
         </div>
@@ -84,7 +84,9 @@ export default {
       checkboxes: [
         { id: 1, label: 'Duales Studium', location: "item.studienangebot.studienmodelle.some(model => model.id === 5)", value: true },
         { id: 2, label: 'Bachelor', location: "item.studienangebot.abschlussgrad.id", value: 2 },
-        { id: 3, label: 'Master', location: "item.studienangebot.abschlussgrad.id", value: "NI" },
+        { id: 3, label: 'Master', location: "item.studienangebot.abschlussgrad.id", value: 10 },
+        { id: 3, label: 'Fernstudium', location: "item.studienangebot.studienform.id", value: 4 },
+        { id: 3, label: 'Vollzeitstudium', location: "item.studienangebot.studienform.id", value: 1 },
         // Add more checkboxes as needed
       ],
     };
@@ -223,87 +225,54 @@ export default {
   font-style: normal;
   color: #3b417c;
 }
-
 header {
-  /* line-height: 1.5; */
-  /* max-height: 150vh; */
   height: 10rem;
   justify-content: center;
 }
-
-body {
-  background: var(--color-);
-}
-
 .content{
   display: flex;
   justify-content: center;
 }
-
+.navbar {
+  text-align: left;
+}
+.logo {
+  margin-left: 1rem;
+  margin-right: 1.5rem;
+  width: 20rem;
+}
 .bodycomponents{
   width: 80%;
   display: flex;
   margin-top: 5rem;
   margin-left: 0;
 }
-
-.logo {
-  margin-left: 1rem;
-  margin-right: 1.5rem;
-  width: 20rem;
-}
-
-.searchbar{
-  margin-top: 5rem;
-}
-
-.navbar {
-  text-align: left;
-}
 .sidebar {
   position: flex;
   margin-top: 50px;
   margin-right: 10px;
   width: 25%;
-  /* box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12)); */
 }
-.resultsnumber{
-  margin: 1rem;
-}
-
-.cards{
-  min-height: 300px;
-  width: 75%;
-  /* min-width: 45rem; */
-  /* width: 700px; */
-  /* --v-layout-left: 0 !important; */
-}
-.pcontainer{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  
-}
-.card{
+.sidebarcard{
   margin-bottom: 20px;
-  /* border: 2px solid #ccc; */
   box-shadow: none;
   box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
   color: #3b417c;
 }
-.cardtitle{
-  border-radius: 16px 16px 0px 0px;
-  /* box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.3)inset; */
-}
-.sidebarcomponent{
-/* margin-left: 400px; */
-align-items: center;
-justify-content: center;
-border: none;
-display: flex;
+.studicards{
+  min-height: 300px;
+  width: 75%;
 }
 .results {
   padding-left: 15px;
+}
+.resultsnumber{
+  margin: 1rem;
+}
+.welcometext{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 </style>
