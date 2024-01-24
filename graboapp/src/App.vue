@@ -4,12 +4,12 @@
     <v-app-bar class="navbar">
       <div class="logo">Step Metal</div>
       
-      <SearchBar @searchData="handleSearch"></SearchBar>
+      <SearchBar @searchData="handleSearch" class="searchfield"></SearchBar>
     </v-app-bar>
     <!------------Sidebar------------>
     <div class="bodycomponents">
       <v-container class="sidebar">
-        <Multiselect @item-selected="handleItemSelect" class="dropdown"></Multiselect>
+        <Multiselect @item-selected="handleItemSelect"></Multiselect>
         <v-card class="card">
           <!--Filter Checkobxen zur Sortierung-->
           <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
@@ -82,8 +82,8 @@ export default {
 
       checkboxes: [
         { id: 1, label: 'Duales Studium', location: "item.studienangebot.studienmodelle.some(model => model.id === 5)", value: true },
-        { id: 2, label: 'Checkbox 2', location: "item.studienangebot.id", value: "73209814" },
-        { id: 3, label: 'TH', location: "item.studienangebot.region.Key", value: "TH" },
+        { id: 2, label: 'Bachelor', location: "item.studienangebot.abschlussgrad.id", value: 2 },
+        { id: 3, label: 'Master', location: "item.studienangebot.abschlussgrad.id", value: "NI" },
         // Add more checkboxes as needed
       ],
     };
@@ -229,6 +229,8 @@ body {
   margin: auto;
   margin-top: 5rem;
   margin-bottom: 40rem;
+  /* margin-right: 90rem; */
+  margin-left: 0;
 }
 
 nav {
@@ -259,14 +261,14 @@ nav a:first-of-type {
   /* width: 70px; */
 }
 
-.searchbars {
+/* .searchbars {
   display: flex;
   width: 700px;
-}
-
+} */
 .searchfield {
   margin-top: 1.5rem;
   margin-right: 1rem;
+  padding-top: 10rem !important;
 }
 .sidebar {
   position: flex;
@@ -274,6 +276,9 @@ nav a:first-of-type {
   margin-right: 10px;
   width: 14vw;
   /* box-shadow: 0px 3px 1px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)), 0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12)); */
+}
+.v-field_overlay{
+  background-color: white;
 }
 .cards{
   min-height: 300px;

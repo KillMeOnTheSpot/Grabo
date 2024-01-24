@@ -5,8 +5,10 @@
       label="Bundesland wählen"
       @update:modelValue="itemSelected"
       variant="solo-filled"
+      class="dropdown"
+      id="dropdown"
     ></v-autocomplete>
-  </template>
+</template>
   
   <script>
   export default {
@@ -43,4 +45,5 @@
     },
   };
   </script>
-  
+  <style scoped>
+</style>
