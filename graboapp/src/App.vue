@@ -104,7 +104,8 @@ export default {
       axios
         .get(apiUrl, {
           headers: {
-            'X-API-Key': this.clientId //API Key 
+            'X-API-Key': '5aee2cfe-1709-48a9-951d-eb48f8f73a74' //API Key 
+            // 'X-API-Key': this.clientId //API Key 
           }
         })
         .then((response) => {
