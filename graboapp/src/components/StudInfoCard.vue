@@ -3,10 +3,10 @@
         <!--Lädt die Daten aus der props "studInfo"-->
         <v-card class="studicard">
             <div class="d-flex flex-no-wrap justify-space-between">
-              <div class="left">
+              <div class="cardcontent">
                 <v-card-title  class="text-h5, title"> {{ studInfo.name }}</v-card-title>
                 <v-card-subtitle class="subtitle">{{ studInfo.nameUni }}</v-card-subtitle>
-                <h2>{{ studInfo.abschlussGrad }}</h2>
+                <h4>{{ studInfo.abschlussGrad }}</h4>
                 <p v-html="studInfo.studInhalt" class="cardtext"></p>
               </div>
               <v-avatar class="ma-3" size="125" rounded="0">
@@ -45,15 +45,13 @@
     float: right;
     color: #3a3e64;
 }
-
-.left{
-
+.cardcontent{
     max-width: 70%;
-    
 }
-
 .title{
     padding: 0;
+    font-weight: 700;
+    font-size:x-large;
 }
 .subtitle{
     padding: 0;
