@@ -6,12 +6,10 @@
               <div class="cardcontent">
                 <v-card-title  class="text-h5, title"> {{ studInfo.name }}</v-card-title>
                 <v-card-subtitle class="subtitle">{{ studInfo.nameUni }}</v-card-subtitle>
-                <h4>{{ studInfo.abschlussGrad }} 
-                    <div v-if="studInfo.abschlussGrad=='Bachelor/Bakkalaureus'">
-                        <img src="./assets/bachelor.svg"> 
-                    </div>
-                </h4>
-                
+                <div v-if="studInfo.abschlussGrad=='Bachelor/Bakkalaureus'" class="degree">
+                    <h4 class="degreetest">{{ studInfo.abschlussGrad }} </h4>
+                    <img src="/src/assets/bachelor.png" width="35" class="bacheloricon"> 
+                </div>
                 <p v-html="studInfo.studInhalt" class="cardtext"></p>
               </div>
               <v-avatar class="ma-3" size="125" rounded="0">
@@ -21,8 +19,6 @@
         </v-card>
     </v-container>
 </template>
-
- 
 <!----------Script----------->
 <script>
     export default {
@@ -43,6 +39,7 @@
 
 .cardcontainer{
     display: flex;
+    /* flex-direction: row; */
 }
 .studicard{
     padding: 1rem 1rem 1rem 1rem;
@@ -52,6 +49,8 @@
 }
 .cardcontent{
     max-width: 70%;
+    /* display: flex; */
+    /* flex-direction: row; */
 }
 .title{
     padding: 0;
@@ -61,6 +60,16 @@
 .subtitle{
     padding: 0;
 }
+.degree{
+    display:inline-flex;
+}
+.bacheloricon{
+    margin-left: 10px;
+}
+.degreetest{
+    margin-top: 5px;
+}
+
 .cardimage{
     max-width: 150px;
 }
