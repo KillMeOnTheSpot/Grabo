@@ -21,18 +21,13 @@ export default {
             animationLoading: false,
         };
     },
-
     methods: {
-        //emitted ein Event an App.vue wenn die Checkbox sich verändert
         searchData() {
-            //this.animationLoading = !this.animationLoading
-            console.log("3" + this.animationLoading)
             this.$emit('searchData', this.inputValueName);
         }
     },
     watch: {
         stopLoading(newValue) {
-            console.log("yes" + newValue)
             this.animationLoading = !newValue;
         }
     },

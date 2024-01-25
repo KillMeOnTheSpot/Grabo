@@ -1,6 +1,5 @@
 <template>
     <v-container class="cardcontainer">
-        <!--Lädt die Daten aus der props "studInfo"-->
         <v-card class="studicard">
             <div class="d-flex flex-no-wrap justify-space-between">
               <div class="cardcontent">
@@ -22,6 +21,7 @@
                     <img src="/src/assets/dual.png" class="dualicon"> 
                     <h4 class="degreetest">Duales Studium </h4>   
                 </div>
+                <!--CHAT GPT: "v-html" -->
                 <p v-html="studInfo.studInhalt" class="cardtext"></p>
               </div>
               <v-avatar class="ma-3" size="125" rounded="0">
@@ -31,6 +31,8 @@
         </v-card>
     </v-container>
 </template>
+
+ 
 <!----------Script----------->
 <script>
     export default {
@@ -40,7 +42,6 @@
         },
         data() {
             return {
-                //kann man maybe löschen
                 arbeitszeitmodell: "n.a"
             };
         },
@@ -51,7 +52,6 @@
 
 .cardcontainer{
     display: flex;
-    /* flex-direction: row; */
 }
 .studicard{
     padding: 1rem 1rem 1rem 1rem;
@@ -61,8 +61,6 @@
 }
 .cardcontent{
     max-width: 70%;
-    /* display: flex; */
-    /* flex-direction: row; */
 }
 .title{
     padding: 0;
