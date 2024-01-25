@@ -33,5 +33,6 @@ export default {
 </script>
 
 <!-----------CSS----------->  
-<style scoped></style>
+<style scoped>
+</style>
 

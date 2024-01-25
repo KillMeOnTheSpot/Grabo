@@ -7,8 +7,20 @@
                 <v-card-title  class="text-h5, title"> {{ studInfo.name }}</v-card-title>
                 <v-card-subtitle class="subtitle">{{ studInfo.nameUni }}</v-card-subtitle>
                 <div v-if="studInfo.abschlussGrad=='Bachelor/Bakkalaureus'" class="degree">
-                    <h4 class="degreetest">{{ studInfo.abschlussGrad }} </h4>
-                    <img src="/src/assets/bachelor.png" width="35" class="bacheloricon"> 
+                    <img src="/src/assets/bachelor.png" class="degreeicon"> 
+                    <h4 class="degreetest">Bachelor </h4>   
+                </div>
+                <div v-else-if="studInfo.abschlussGrad=='Master'" class="degree">
+                    <img src="/src/assets/master.png" class="degreeicon"> 
+                    <h4 class="degreetest">{{ studInfo.abschlussGrad }} </h4>   
+                </div>
+                <div v-else-if="studInfo.abschlussGrad=='Staatsexamen'" class="degree">
+                    <img src="/src/assets/staatsexamen.png" class="degreeicon"> 
+                    <h4 class="degreetest">{{ studInfo.abschlussGrad }} </h4>   
+                </div>
+                <div v-if="studInfo.dual != null" class="degree">
+                    <img src="/src/assets/dual.png" class="dualicon"> 
+                    <h4 class="degreetest">Duales Studium </h4>   
                 </div>
                 <p v-html="studInfo.studInhalt" class="cardtext"></p>
               </div>
@@ -58,22 +70,34 @@
     font-size:x-large;
 }
 .subtitle{
-    padding: 0;
+    padding-left: 0;
 }
 .degree{
     display:inline-flex;
 }
-.bacheloricon{
-    margin-left: 10px;
+.degreeicon{
+    margin-right: 10px;
+    margin-top: 6px;
+    width: 20px;
+    height: 20px;
 }
 .degreetest{
     margin-top: 5px;
 }
-
+.dualicon{
+    margin-right: 8px;
+    margin-top: 6px;
+    width: 20px;
+    height: 20px;
+    margin-left: 50px;
+}
 .cardimage{
     max-width: 150px;
 }
 .cardtext{
     padding-top: 2rem;
+}
+h4{
+    font-weight: 600;
 }
 </style>

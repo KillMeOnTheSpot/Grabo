@@ -38,6 +38,7 @@
             studInhalt: stud.studInhalt,
             logoURL: stud.logoURL,
             abschlussGrad: stud.abschlussGrad,
+            dual: stud.dual,
           }">
           </StudInfoCard>
         </div>
@@ -198,6 +199,7 @@ export default {
           nameUni: item.studienangebot.studienanbieter.name,
           studInhalt: item.studienangebot.studiInhalt,
           abschlussGrad: item.studienangebot.abschlussgrad.label,
+          dual: item.studienangebot.studienmodelle.some(model => model.id === 5 ),
 
           // from ChatGPT: Use optional chaining and nullish coalescing in case no logo is there
           logoURL: item.studienangebot.studienanbieter.logo?.externalURL ?? this.placeholderImage
