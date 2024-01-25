@@ -18,7 +18,7 @@
                     <img src="/src/assets/staatsexamen.png" class="degreeicon"> 
                     <h4 class="degreetest">{{ studInfo.abschlussGrad }} </h4>   
                 </div>
-                <div v-if="studInfo.dual != null" class="degree">
+                <div v-if="studInfo.dual" class="degree">
                     <img src="/src/assets/dual.png" class="dualicon"> 
                     <h4 class="degreetest">Duales Studium </h4>   
                 </div>

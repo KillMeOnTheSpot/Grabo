@@ -6,6 +6,7 @@
       label="Bundesland wählen"
       @update:modelValue="itemSelected"
       variant="solo-filled"
+      color="primary"
       multiple  
     ></v-autocomplete>
 </template>

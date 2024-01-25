@@ -44,4 +44,9 @@ export default {
 .searchfield{
     padding-top: 1.5rem;
 }
+
+#searchButton{
+    margin-right: 7rem;
+    margin-left: 1rem;
+}
 </style>

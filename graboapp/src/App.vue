@@ -13,7 +13,7 @@
           <!--Filter Checkboxen zur Sortierung-->
           <DynamicFilterCheckbox v-for="checkbox in checkboxes" :key="checkbox.id" :checkboxId="checkbox.id"
             :checkboxLabel="checkbox.label" :dataLocation="checkbox.location" :dataValue="checkbox.value"
-            @checkboxChanged="handleCheckboxChanged" />
+            @checkboxChanged="handleCheckboxChanged"/>
         </v-card>
     </v-container>
       <!------------Main (Ergebnisse)------------>
@@ -263,6 +263,8 @@ header {
   align-items: flex-start;
   height: 100%;
   flex-direction: column;
+  margin-left: 1.5rem;
+  margin-top: 3rem;
 
 }
 .welcome{

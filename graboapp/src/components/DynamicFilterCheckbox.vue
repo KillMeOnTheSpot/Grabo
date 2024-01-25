@@ -2,7 +2,7 @@
     <v-container class="checkboxcontainer">
         <!-- <h2>checkbox</h2> -->
         <!-- Displays whats selected, both can be selected at the same time: Vollzeit Teilzeit Card... -->
-        <v-checkbox v-model="isChecked" :label="checkboxLabel" @change="handleChange" color="primary"></v-checkbox>
+        <v-checkbox v-model="isChecked" :label="checkboxLabel" @change="handleChange" color="blue"></v-checkbox>
     </v-container>
 </template>
 <!------------Script------------>
