@@ -11,7 +11,6 @@
                         <img src="./assets/bachelor.svg"> 
                     </div>
                 </h4>
-                
                 <p v-html="studInfo.studInhalt" class="cardtext"></p>
               </div>
               <v-avatar class="ma-3" size="125" rounded="0">
