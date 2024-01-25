@@ -89,8 +89,8 @@ export default {
         { id: 1, label: 'Duales Studium', location: "item.studienangebot.studienmodelle.some(model => model.id === 5)", value: true },
         { id: 2, label: 'Bachelor', location: "item.studienangebot.abschlussgrad.id", value: 2 },
         { id: 3, label: 'Master', location: "item.studienangebot.abschlussgrad.id", value: 10 },
-        { id: 3, label: 'Fernstudium', location: "item.studienangebot.studienform.id", value: 4 },
-        { id: 3, label: 'Vollzeitstudium', location: "item.studienangebot.studienform.id", value: 1 },
+        { id: 4, label: 'Fernstudium', location: "item.studienangebot.studienform.id", value: 4 },
+        { id: 5, label: 'Vollzeitstudium', location: "item.studienangebot.studienform.id", value: 1 },
         // Add more checkboxes as needed
       ],
     };
@@ -100,8 +100,6 @@ export default {
     //fetches data, when the search button is pressed
     fetchData(inputValueName) {
       this.filteredResponseData = 'loading';
-
-      console.log(this.filteredResponseData);
       // Axios GET request, url durchsucht anhand des input feldes
       let apiUrl = `https://rest.arbeitsagentur.de/infosysbub/studisu/pc/v1/studienangebote?sw=${inputValueName}&pg=${this.index}`;
       axios
@@ -116,10 +114,10 @@ export default {
           this.responseData.items = this.responseData.items.concat(response.data.items);
 
           if (response.data.items.length > 0 && this.index < this.upperCallLimit) {
-            console.log("is valid, index is: " + this.index);
             this.index++;
+            
             this.fetchData(inputValueName);
-            //recursive function call
+            
             this.filterAndDisplayData();
           }
           else if(this.responseData.items.length == 0){
@@ -132,7 +130,6 @@ export default {
           
         })
         .catch((error) => {
-          // Handle error
           this.filteredResponseData = 'error';
           this.finishedLoading = true;
           console.error(this.filteredResponseData);
@@ -162,9 +159,6 @@ export default {
       this.filterAndDisplayData();
     },
     handleCheckboxChanged(checkboxData) {
-      console.log("Checkbox was changed");
-
-      //sucht, ob es schon einen Filter mit der selben ID gibt. Falls ja wird dieser entferntm falls nicht,m wird er als neuer FIlter hinzugefügt
       let found = this.filters.some(filter => filter.id === checkboxData.id);
       if (found) {
         console.log("success");
@@ -177,11 +171,9 @@ export default {
     },
     filterAndDisplayData() {
       this.filteredResponseData=='loading'
-      //checks, if there is data to be displayed
+
       if (this.responseData.items.length > 0) {
         let filteredData = this.responseData;
-
-        console.log(this.responseData);
 
         filteredData = filteredData.items.map(item => item);
 
@@ -191,16 +183,12 @@ export default {
           });
         }
 
-        console.log(filteredData);
-        console.log(this.filters.length);
-
         filteredData = filteredData.map(item => ({
           name: item.studienangebot.studiBezeichnung,
           nameUni: item.studienangebot.studienanbieter.name,
           studInhalt: item.studienangebot.studiInhalt,
           abschlussGrad: item.studienangebot.abschlussgrad.label,
           dual: item.studienangebot.studienmodelle.some(model => model.id === 5 ),
-
           // from ChatGPT: Use optional chaining and nullish coalescing in case no logo is there
           logoURL: item.studienangebot.studienanbieter.logo?.externalURL ?? this.placeholderImage
         }));
