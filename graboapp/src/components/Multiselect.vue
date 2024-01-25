@@ -40,8 +40,6 @@
     methods: {
       itemSelected() {
         // Emit an event to notify the parent component with the selected item's id
-        console.log("test" + this.selectedItem);
-        console.log(this.selectedItem);
         this.$emit('item-selected', this.selectedItem);
       },
     },

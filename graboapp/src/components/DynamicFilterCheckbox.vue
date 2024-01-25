@@ -3,6 +3,8 @@
         <v-checkbox v-model="isChecked" :label="checkboxLabel" @change="handleChange" color="blue"></v-checkbox>
     </v-container>
 </template>
+
+
 <!------------Script------------>
 <script>
 
@@ -21,15 +23,9 @@ export default {
         };
     },
     methods: {
-        //emitted ein Event an App.vue wenn die Checkbox sich verändert
         handleChange(){
             this.$emit('checkboxChanged', { id: this.checkboxId, location: this.dataLocation, value: this.dataValue });
         }
     }
 }
 </script>
-
-<!-----------CSS----------->  
-<style scoped>
-</style>
-

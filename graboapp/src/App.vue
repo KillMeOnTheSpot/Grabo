@@ -32,6 +32,7 @@
           <h2 class="results">Such Ergebnisse:</h2>
           <p class="resultsnumber">{{this.filteredResponseData.length}} Ergebnisse gefunden</p>
           <!--stud Informationen werden an die studInfoCard Komponente übergeben-->
+          <!--CHAT GPT: "v-for"-Schleife-->
           <StudInfoCard v-for="(stud, index) in filteredResponseData" :key="index" :studInfo="{
             name: stud.name,
             nameUni: stud.nameUni,
@@ -44,7 +45,6 @@
         </div>
         <!--Wird ausgegeben, wenn noch nichts geladen wurde-->
         <div v-else class="welcometext">
-<!--           <v-icon start icon="mdi-information" color="primary"></v-icon> -->
           <h1 class="welcome">Willkommen!</h1>
           <p class="description"><span class="descr_bold">StudiScout®</span> hilft dir dabei, das <span class="descr_bold">Traum-Studium</span> in deiner Nähe zu finden!<br>
           Suche einfach nach einem <span class="descr_bold">Studiengang</span> ,der dich interressiert und passe die <span class="descr_bold">Parameter</span> für dich an!</p>
@@ -91,16 +91,15 @@ export default {
         { id: 3, label: 'Master', location: "item.studienangebot.abschlussgrad.id", value: 10 },
         { id: 4, label: 'Fernstudium', location: "item.studienangebot.studienform.id", value: 4 },
         { id: 5, label: 'Vollzeitstudium', location: "item.studienangebot.studienform.id", value: 1 },
-        // Add more checkboxes as needed
+
       ],
     };
   },
-  //methods
   methods: {
     //fetches data, when the search button is pressed
     fetchData(inputValueName) {
       this.filteredResponseData = 'loading';
-      // Axios GET request, url durchsucht anhand des input feldes
+      // Axios GET request, url searches by input field
       let apiUrl = `https://rest.arbeitsagentur.de/infosysbub/studisu/pc/v1/studienangebote?sw=${inputValueName}&pg=${this.index}`;
       axios
         .get(apiUrl, {
@@ -110,14 +109,11 @@ export default {
         })
         .then((response) => {
           // Handle successful response
-          
           this.responseData.items = this.responseData.items.concat(response.data.items);
 
           if (response.data.items.length > 0 && this.index < this.upperCallLimit) {
             this.index++;
-            
             this.fetchData(inputValueName);
-            
             this.filterAndDisplayData();
           }
           else if(this.responseData.items.length == 0){
@@ -149,6 +145,7 @@ export default {
       console.log(selectedIds);
       let id = 0;
       let found = this.filters.some(filter => filter.id === id);
+      //CHAT GPT: "if (found)"//
       if (found) {
         console.log("success");
         this.filters = this.filters.filter(filter => filter.id !== id);
@@ -189,19 +186,19 @@ export default {
           studInhalt: item.studienangebot.studiInhalt,
           abschlussGrad: item.studienangebot.abschlussgrad.label,
           dual: item.studienangebot.studienmodelle.some(model => model.id === 5 ),
-          // from ChatGPT: Use optional chaining and nullish coalescing in case no logo is there
+          //ChatGPT: Use optional chaining and nullish coalescing in case no logo is there
           logoURL: item.studienangebot.studienanbieter.logo?.externalURL ?? this.placeholderImage
         }));
-
         this.filteredResponseData = filteredData;
       }
-
     }
   },
   //components
   components: { StudInfoCard, DynamicFilterCheckbox, SearchBar, Multiselect }
 };
 </script>
+
+
 <!------------------------CSS---------------------------->
 <style scoped>
 *{
