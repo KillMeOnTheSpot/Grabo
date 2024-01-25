@@ -6,7 +6,11 @@
               <div class="left">
                 <v-card-title  class="text-h5, title"> {{ studInfo.name }}</v-card-title>
                 <v-card-subtitle class="subtitle">{{ studInfo.nameUni }}</v-card-subtitle>
-                <h2>{{ studInfo.abschlussGrad }}</h2>
+                <h4>{{ studInfo.abschlussGrad }} 
+                    <div v-if="studInfo.abschlussGrad=='Bachelor/Bakkalaureus'">
+                        <img src="./assets/bachelor.svg"> 
+                    </div>
+                </h4>
                 <p v-html="studInfo.studInhalt" class="cardtext"></p>
               </div>
               <v-avatar class="ma-3" size="125" rounded="0">
