@@ -6,7 +6,8 @@ Marc Eisler 35233
 
 -------------------------LINK ZUR CLOUDANWENDUNG------------------------------
 
-
+https://studyscout.netlify.app/
+API Anfragen in der deployten Version nicht möglich, aufgrund von CORS error.
 
 
 -------------------------------HILFSMITTEL------------------------------------
